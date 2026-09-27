@@ -1,6 +1,10 @@
 import { Lead, AIQualification, OutreachMessage, AgencySettings } from '../types';
 import { matchTemplateForCategory } from './templateRegistry';
 
+// Active Groq models in prioritized order
+const GROQ_PRIMARY_MODEL = 'qwen/qwen3.8-27b';
+const GROQ_FALLBACK_MODELS = ['openai/gpt-oss-120b', 'openai/gpt-oss-20b'];
+
 export async function runLiveGroqAnalysis(
   lead: Lead,
   apiKey?: string
@@ -42,53 +46,57 @@ Rules:
   "priorityReason": "string"
 }`;
 
-  try {
-    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${effectiveKey}`,
-      },
-      body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
-        messages: [
-          {
-            role: 'system',
-            content: 'You are an expert agency advisor. Output strictly raw JSON.',
-          },
-          {
-            role: 'user',
-            content: prompt,
-          },
-        ],
-        temperature: 0.3,
-        response_format: { type: 'json_object' },
-      }),
-    });
+  const modelsToTry = [GROQ_PRIMARY_MODEL, ...GROQ_FALLBACK_MODELS];
 
-    if (!response.ok) {
-      console.warn('Groq API returned error status:', response.status);
-      return null;
-    }
+  for (const model of modelsToTry) {
+    try {
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${effectiveKey}`,
+        },
+        body: JSON.stringify({
+          model,
+          messages: [
+            {
+              role: 'system',
+              content: 'You are an expert agency advisor. Output strictly raw JSON.',
+            },
+            {
+              role: 'user',
+              content: prompt,
+            },
+          ],
+          temperature: 0.3,
+          response_format: { type: 'json_object' },
+        }),
+      });
 
-    const data = await response.json();
-    const content = data?.choices?.[0]?.message?.content;
-    if (content) {
-      const cleanJson = content.replace(/```json\n?|\n?```/g, '').trim();
-      const parsed = JSON.parse(cleanJson);
-      return {
-        businessSummary: parsed.businessSummary || `${lead.businessName} in ${lead.location}`,
-        onlinePresenceSummary: parsed.onlinePresenceSummary || 'Analyzed web presence via Groq Llama-3.3',
-        mainOpportunity: parsed.mainOpportunity || 'Modern mobile website with WhatsApp CTA',
-        potentialWebsiteNeed: parsed.potentialWebsiteNeed || 'Mobile-first conversion website',
-        recommendedService: parsed.recommendedService || 'Mobile-First Business Website',
-        recommendedTemplate: parsed.recommendedTemplate || matchTemplateForCategory(lead.category),
-        priority: parsed.priority || 'HOT',
-        priorityReason: parsed.priorityReason || 'High intent local business prospect',
-      };
+      if (!response.ok) {
+        console.warn(`Groq API (${model}) returned status:`, response.status);
+        continue;
+      }
+
+      const data = await response.json();
+      const content = data?.choices?.[0]?.message?.content;
+      if (content) {
+        const cleanJson = content.replace(/```json\n?|\n?```/g, '').trim();
+        const parsed = JSON.parse(cleanJson);
+        return {
+          businessSummary: parsed.businessSummary || `${lead.businessName} in ${lead.location}`,
+          onlinePresenceSummary: parsed.onlinePresenceSummary || `Verified local presence in ${lead.location}`,
+          mainOpportunity: parsed.mainOpportunity || 'Mobile-responsive website with 1-tap WhatsApp booking',
+          potentialWebsiteNeed: parsed.potentialWebsiteNeed || 'Modern high-speed conversion website',
+          recommendedService: parsed.recommendedService || 'Mobile-First Business Website & WhatsApp Funnel',
+          recommendedTemplate: parsed.recommendedTemplate || matchTemplateForCategory(lead.category),
+          priority: parsed.priority || (lead.leadScore >= 80 ? 'HOT' : 'WARM'),
+          priorityReason: parsed.priorityReason || 'High-intent local business with strong growth opportunity',
+        };
+      }
+    } catch (err) {
+      console.warn(`Groq model ${model} attempt failed:`, err);
     }
-  } catch (err) {
-    console.error('Groq API analysis failed:', err);
   }
 
   return null;
@@ -135,49 +143,53 @@ Return ONLY a raw JSON object (no backticks, no markdown):
   "body": "string"
 }`;
 
-  try {
-    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${effectiveKey}`,
-      },
-      body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
-        messages: [
-          {
-            role: 'system',
-            content: 'You write high-converting, honest agency outreach copy. Output strictly raw JSON.',
-          },
-          {
-            role: 'user',
-            content: prompt,
-          },
-        ],
-        temperature: 0.5,
-        response_format: { type: 'json_object' },
-      }),
-    });
+  const modelsToTry = [GROQ_PRIMARY_MODEL, ...GROQ_FALLBACK_MODELS];
 
-    if (response.ok) {
-      const data = await response.json();
-      const content = data?.choices?.[0]?.message?.content;
-      if (content) {
-        const cleanJson = content.replace(/```json\n?|\n?```/g, '').trim();
-        const parsed = JSON.parse(cleanJson);
-        return {
-          id: `msg-${Date.now()}`,
-          status: 'GENERATED',
-          tone,
-          subject: parsed.subject || `Website concept for ${lead.businessName}`,
-          body: parsed.body || '',
-          channel: lead.phone ? 'whatsapp' : 'email',
-          generatedAt: new Date().toISOString(),
-        };
+  for (const model of modelsToTry) {
+    try {
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${effectiveKey}`,
+        },
+        body: JSON.stringify({
+          model,
+          messages: [
+            {
+              role: 'system',
+              content: 'You write high-converting, honest agency outreach copy. Output strictly raw JSON.',
+            },
+            {
+              role: 'user',
+              content: prompt,
+            },
+          ],
+          temperature: 0.4,
+          response_format: { type: 'json_object' },
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const content = data?.choices?.[0]?.message?.content;
+        if (content) {
+          const cleanJson = content.replace(/```json\n?|\n?```/g, '').trim();
+          const parsed = JSON.parse(cleanJson);
+          return {
+            id: `msg-${Date.now()}`,
+            status: 'GENERATED',
+            tone,
+            subject: parsed.subject || `Website concept for ${lead.businessName}`,
+            body: parsed.body || '',
+            channel: lead.phone ? 'whatsapp' : 'email',
+            generatedAt: new Date().toISOString(),
+          };
+        }
       }
+    } catch (err) {
+      console.warn(`Groq model ${model} outreach attempt failed:`, err);
     }
-  } catch (err) {
-    console.error('Groq API outreach generation error:', err);
   }
 
   return null;
