@@ -1,5 +1,6 @@
 import { Lead, WebsiteStatus } from '../types';
 import { fetchLiveRealBusinesses } from './liveMapsService';
+import { fetchGeoapifyPlaces } from './geoapifyService';
 
 export interface DiscoveryCriteria {
   category: string;
@@ -41,6 +42,39 @@ export class LiveMapsDiscoveryProvider implements LeadSourceProvider {
   }
 }
 
+export class GeoapifyPlacesProvider implements LeadSourceProvider {
+  id = 'geoapify-places';
+  name = 'Geoapify Places API (Live Real Maps & Addresses)';
+  description = 'Live global places search with verified contacts, address formats, and categories using Geoapify.';
+  isConfigured = true;
+
+  async search(criteria: DiscoveryCriteria): Promise<Lead[]> {
+    const results = await fetchGeoapifyPlaces({
+      category: criteria.category,
+      location: criteria.location,
+      limit: criteria.limit,
+    });
+
+    if (results.length === 0) {
+      // Fallback to Live OSM if Geoapify key is missing or quota reached
+      return fetchLiveRealBusinesses({
+        category: criteria.category,
+        location: criteria.location,
+        limit: criteria.limit,
+      });
+    }
+
+    if (criteria.websiteRequirement === 'no_website') {
+      return results.filter((l) => !l.website || l.website.trim() === '');
+    }
+    if (criteria.websiteRequirement === 'poor_website') {
+      return results.filter((l) => l.website && l.website.trim() !== '');
+    }
+
+    return results;
+  }
+}
+
 export class GooglePlacesProviderStub implements LeadSourceProvider {
   id = 'google-places';
   name = 'Google Places API (Live Maps Authorized Connector)';
@@ -57,6 +91,8 @@ export class GooglePlacesProviderStub implements LeadSourceProvider {
 }
 
 export const LEAD_PROVIDERS: LeadSourceProvider[] = [
+  new GeoapifyPlacesProvider(),
   new LiveMapsDiscoveryProvider(),
   new GooglePlacesProviderStub(),
 ];
+

@@ -11,16 +11,23 @@ import {
   CheckCircle2,
   ShieldAlert,
   HelpCircle,
+  MapPin,
+  Key,
 } from 'lucide-react';
 
 export const SettingsView: React.FC = () => {
   const { settings, updateSettings, showToast } = useApp();
 
   const [formData, setFormData] = useState(settings);
+  const [geoapifyKey, setGeoapifyKey] = useState<string>(() => {
+    return localStorage.getItem('geoapify_api_key') || (import.meta as any).env?.VITE_GEOAPIFY_API_KEY || '';
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     updateSettings(formData);
+    localStorage.setItem('geoapify_api_key', geoapifyKey.trim());
+    showToast('All settings and API keys successfully saved!', 'success');
   };
 
   return (
@@ -33,7 +40,7 @@ export const SettingsView: React.FC = () => {
             Agency Settings & Scoring Engine
           </h2>
           <p className="text-xs text-slate-400">
-            Configure agency branding, customize lead prioritization scoring weights, and manage deployment providers.
+            Configure agency branding, API keys (Gemini, Geoapify), customize lead prioritization scoring weights, and manage deployment providers.
           </p>
         </div>
 
@@ -300,14 +307,17 @@ export const SettingsView: React.FC = () => {
             </div>
 
             <div className="space-y-1">
-              <label className="font-semibold text-slate-300">Custom API Key (Optional)</label>
+              <label className="font-semibold text-slate-300">Google Gemini / AI API Key (Optional)</label>
               <input
                 type="password"
                 value={formData.apiKey}
                 onChange={(e) => setFormData({ ...formData, apiKey: e.target.value })}
-                placeholder="sk-... / AIza..."
+                placeholder="AIzaSy... (or sk-...)"
                 className="w-full bg-slate-950 border border-slate-750 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-1 focus:ring-indigo-500 font-mono"
               />
+              <p className="text-[10px] text-slate-500">
+                You can also set this in your <code className="text-slate-300">.env</code> file as <code className="text-indigo-400">VITE_GEMINI_API_KEY</code>.
+              </p>
             </div>
 
             <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-[11px] text-slate-400">
@@ -316,6 +326,41 @@ export const SettingsView: React.FC = () => {
                 Anti-Hallucination Guardrails Active
               </span>
               <p>AI copy generation is strictly constrained by factual verified lead input. No fabricated awards, review numbers, or fake statistics.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Live Maps & Geoapify Configuration */}
+        <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-4">
+          <h3 className="text-sm font-bold text-white tracking-tight flex items-center gap-2 border-b border-slate-800 pb-3">
+            <MapPin className="w-4 h-4 text-amber-400" />
+            Live Maps & Geoapify API Provider
+          </h3>
+
+          <div className="space-y-3 text-xs">
+            <div className="space-y-1">
+              <label className="font-semibold text-slate-300 flex items-center justify-between">
+                <span>Geoapify API Key</span>
+                <span className="text-[10px] text-amber-400 font-normal">Free 3,000 req/day</span>
+              </label>
+              <input
+                type="password"
+                value={geoapifyKey}
+                onChange={(e) => setGeoapifyKey(e.target.value)}
+                placeholder="Paste your Geoapify API Key here..."
+                className="w-full bg-slate-950 border border-slate-750 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-1 focus:ring-amber-500 font-mono"
+              />
+              <p className="text-[10px] text-slate-500">
+                You can also set this in your <code className="text-slate-300">.env</code> file as <code className="text-amber-400">VITE_GEOAPIFY_API_KEY</code>.
+              </p>
+            </div>
+
+            <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-[11px] text-slate-400">
+              <span className="font-bold text-emerald-400 flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                Real-Time Local Maps Search Active
+              </span>
+              <p>When configured, "Find Leads" queries live businesses with real GPS coordinates, verified phone numbers, and categories via Geoapify Places API.</p>
             </div>
           </div>
         </div>
