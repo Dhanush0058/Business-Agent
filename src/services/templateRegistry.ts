@@ -1,4 +1,19 @@
-import { TemplateDefinition, DemoCustomization, Lead, ServiceItem } from '../types';
+import { DemoCustomization, Lead, ServiceItem } from '../types';
+
+export interface TemplateDefinition {
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  previewImage: string;
+  version: string;
+  status: 'active' | 'draft' | 'archived';
+  demoCount: number;
+  lastUpdated: string;
+  externalBaseUrl?: string;
+  variables: string[];
+  defaultCustomization: Partial<DemoCustomization>;
+}
 
 export const TEMPLATES: TemplateDefinition[] = [
   {
@@ -7,6 +22,7 @@ export const TEMPLATES: TemplateDefinition[] = [
     category: 'Fitness & Wellness',
     description: 'High-energy, mobile-first design with dynamic class schedules, trainer highlights, membership tiers, and WhatsApp 1-tap trial booking.',
     previewImage: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop',
+    externalBaseUrl: 'https://gym-project1-pi.vercel.app',
     version: '2.4.0',
     status: 'active',
     demoCount: 14,
@@ -61,6 +77,7 @@ export const TEMPLATES: TemplateDefinition[] = [
     category: 'Food & Hospitality',
     description: 'Sensory, appetite-inducing restaurant layout with interactive digital menu categories, chef specials, online table reservation, and WhatsApp ordering.',
     previewImage: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=800&auto=format&fit=crop',
+    externalBaseUrl: 'https://restuarant-project2.vercel.app',
     version: '2.2.1',
     status: 'active',
     demoCount: 19,
@@ -113,6 +130,7 @@ export const TEMPLATES: TemplateDefinition[] = [
     category: 'Education & Training',
     description: 'Structured, high-trust academic design featuring course curricula, faculty credentials, batch schedules, student reviews, and instant demo class registration.',
     previewImage: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop',
+    externalBaseUrl: 'https://education-project3.vercel.app',
     version: '2.1.0',
     status: 'active',
     demoCount: 11,
@@ -173,6 +191,24 @@ export function matchTemplateForCategory(category: string): string {
     return 'education';
   }
   return 'fitness'; // Default fallback
+}
+
+export function generateLiveDemoUrl(lead: Lead, templateId?: string): string {
+  const chosenTemplateId = templateId || lead.assignedTemplate || matchTemplateForCategory(lead.category);
+  const tpl = TEMPLATES.find((t) => t.id === chosenTemplateId) || TEMPLATES[0];
+  const baseUrl = tpl.externalBaseUrl || 'https://gym-project1-pi.vercel.app';
+
+  const params = new URLSearchParams({
+    business_name: lead.businessName,
+    category: lead.category,
+    location: lead.location,
+    phone: lead.phone || '',
+    whatsapp: (lead.phone || '').replace(/[^0-9]/g, ''),
+    concept: 'true',
+    agency: 'Dhanex Studio',
+  });
+
+  return `${baseUrl}/?${params.toString()}`;
 }
 
 export function generatePersonalizedDemoData(lead: Lead, templateId?: string): DemoCustomization {

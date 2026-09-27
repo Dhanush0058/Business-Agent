@@ -225,8 +225,8 @@ export const DemoGeneratorView: React.FC = () => {
           <div
             className={`w-full ${getDeviceWidth()} transition-all duration-300 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-950`}
           >
-            {/* Browser Frame Header */}
-            <div className="bg-slate-900 px-4 py-2.5 border-b border-slate-800 flex items-center justify-between">
+            {/* Render Mode Switcher Bar */}
+            <div className="bg-slate-900 px-4 py-2 border-b border-slate-800 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80"></span>
@@ -234,25 +234,31 @@ export const DemoGeneratorView: React.FC = () => {
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
                 </div>
                 <div className="ml-3 px-3 py-0.5 rounded-md bg-slate-950 border border-slate-800 text-[11px] text-slate-400 font-mono truncate max-w-xs">
-                  {currentLead?.demoUrl || `https://demo.dhanexstudio.com/${currentLead?.businessName.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+                  {currentLead?.demoUrl || `https://gym-project1-pi.vercel.app/?business_name=${encodeURIComponent(currentLead?.businessName || '')}`}
                 </div>
               </div>
 
-              <span className="text-[10px] text-indigo-400 font-semibold uppercase tracking-wider">
-                Interactive Preview
-              </span>
+              <div className="flex items-center gap-2">
+                <a
+                  href={currentLead?.demoUrl || `https://gym-project1-pi.vercel.app/?business_name=${encodeURIComponent(currentLead?.businessName || '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[10px] px-2 py-0.5 rounded bg-indigo-600 hover:bg-indigo-500 text-white font-bold flex items-center gap-1"
+                >
+                  <span>Open Live</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
             </div>
 
-            {/* Rendered Template */}
-            <div className="max-h-[720px] overflow-y-auto">
-              {editData ? (
-                <LiveTemplateRenderer data={editData} />
-              ) : (
-                <div className="p-16 text-center text-slate-400 text-xs">
-                  <Sparkles className="w-8 h-8 text-indigo-400 mx-auto mb-2 animate-spin" />
-                  Generating personalized demo...
-                </div>
-              )}
+            {/* Rendered Template (Live Vercel Site in Interactive Viewport) */}
+            <div className="h-[720px] overflow-hidden bg-slate-950 relative">
+              <iframe
+                src={currentLead?.demoUrl || (currentLead?.assignedTemplate === 'restaurant' ? 'https://restuarant-project2.vercel.app' : currentLead?.assignedTemplate === 'education' ? 'https://education-project3.vercel.app' : 'https://gym-project1-pi.vercel.app')}
+                title="Live Vercel Concept Demo"
+                className="w-full h-full border-0 bg-slate-950"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+              />
             </div>
           </div>
         </div>

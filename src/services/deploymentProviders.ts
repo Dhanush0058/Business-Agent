@@ -1,4 +1,5 @@
 import { DemoCustomization, Lead } from '../types';
+import { generateLiveDemoUrl } from './templateRegistry';
 
 export interface DeploymentResult {
   success: boolean;
@@ -19,31 +20,28 @@ export interface DeploymentProvider {
 
 export class LocalVitePreviewProvider implements DeploymentProvider {
   id = 'local';
-  name = 'Dhanex Studio Internal Live Preview Engine (Sub-route / Hash)';
+  name = 'Live Vercel Template + Query Parameters';
 
-  async deploy(lead: Lead, customization: DemoCustomization, domain: string = 'demo.dhanexstudio.com'): Promise<DeploymentResult> {
-    await new Promise((res) => setTimeout(res, 400));
+  async deploy(lead: Lead, customization: DemoCustomization): Promise<DeploymentResult> {
+    await new Promise((res) => setTimeout(res, 300));
+    const liveUrl = generateLiveDemoUrl(lead, customization.templateId);
     const slug = lead.businessName
       .toLowerCase()
       .trim()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-|-$/g, '');
 
-    const origin = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:5173';
-    // Generates shareable URL with anchor/query for direct in-app or standalone viewing
-    const liveUrl = `${origin}/#preview/${lead.id}`;
-
     return {
       success: true,
       url: liveUrl,
       previewSlug: slug,
-      provider: 'Internal Preview Engine',
+      provider: 'Live Vercel Template Engine',
       deployedAt: new Date().toISOString(),
-      message: `Successfully generated live responsive concept preview for ${customization.businessName}`,
+      message: `Generated live personalized demo: ${liveUrl}`,
     };
   }
 
-  async deleteDeployment(slug: string): Promise<boolean> {
+  async deleteDeployment(): Promise<boolean> {
     return true;
   }
 }
