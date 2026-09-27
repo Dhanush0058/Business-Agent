@@ -284,6 +284,34 @@ export class MockLocalBusinessProvider implements LeadSourceProvider {
   }
 }
 
+import { fetchLiveRealBusinesses } from './liveMapsService';
+
+export class LiveMapsDiscoveryProvider implements LeadSourceProvider {
+  id = 'live-maps';
+  name = 'Live Maps & Real Local Business Search (Live GPS/OSM)';
+  description = 'Queries real-time live business listings with actual addresses and verified coordinates.';
+  isConfigured = true;
+
+  async search(criteria: DiscoveryCriteria): Promise<Lead[]> {
+    const liveResults = await fetchLiveRealBusinesses({
+      category: criteria.category,
+      location: criteria.location,
+      limit: criteria.limit,
+    });
+
+    if (liveResults.length > 0) {
+      if (criteria.websiteRequirement === 'no_website') {
+        return liveResults.filter((l) => !l.website || l.website.trim() === '');
+      }
+      return liveResults;
+    }
+
+    // Fallback to local curated database if network query timed out
+    const fallback = new MockLocalBusinessProvider();
+    return fallback.search(criteria);
+  }
+}
+
 export class GooglePlacesProviderStub implements LeadSourceProvider {
   id = 'google-places';
   name = 'Google Places API (Official Authorized Connector)';
@@ -291,13 +319,19 @@ export class GooglePlacesProviderStub implements LeadSourceProvider {
   isConfigured = false;
 
   async search(criteria: DiscoveryCriteria): Promise<Lead[]> {
-    // Fallback gracefully to compliant provider if API key not entered
+    const liveResults = await fetchLiveRealBusinesses({
+      category: criteria.category,
+      location: criteria.location,
+      limit: criteria.limit,
+    });
+    if (liveResults.length > 0) return liveResults;
     const fallback = new MockLocalBusinessProvider();
     return fallback.search(criteria);
   }
 }
 
 export const LEAD_PROVIDERS: LeadSourceProvider[] = [
+  new LiveMapsDiscoveryProvider(),
   new MockLocalBusinessProvider(),
   new GooglePlacesProviderStub(),
 ];

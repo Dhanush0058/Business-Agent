@@ -10,6 +10,7 @@ import {
 import { DEFAULT_SCORING_RULES, calculateLeadScore } from '../services/scoringEngine';
 import { analyzeWebsite } from '../services/websiteAnalyzer';
 import { runAIQualification, generateOutreachMessage } from '../services/aiAdvisor';
+import { runLiveGeminiAnalysis, runLiveGeminiOutreach } from '../services/geminiService';
 import { generatePersonalizedDemoData } from '../services/templateRegistry';
 import { DEPLOYMENT_PROVIDERS } from '../services/deploymentProviders';
 import confetti from 'canvas-confetti';
@@ -580,11 +581,19 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     showToast(`Demo approved! Generated outreach pitch for human review.`, 'success');
   };
 
-  const generateOutreachForLead = (id: string, tone: 'professional' | 'friendly' | 'short' = 'friendly') => {
+  const generateOutreachForLead = async (id: string, tone: 'professional' | 'friendly' | 'short' = 'friendly') => {
     const lead = leads.find((l) => l.id === id);
     if (!lead) return;
 
-    const msg = generateOutreachMessage(lead, settings, tone, lead.demoUrl);
+    let msg = null;
+    if (settings.aiProvider === 'gemini' && settings.apiKey) {
+      msg = await runLiveGeminiOutreach(lead, settings, tone, lead.demoUrl || '', settings.apiKey);
+    }
+
+    if (!msg) {
+      msg = generateOutreachMessage(lead, settings, tone, lead.demoUrl);
+    }
+
     updateLead(id, {
       outreachMessage: msg,
       status: lead.status === 'DEMO_APPROVED' ? 'MESSAGE_READY' : lead.status,
