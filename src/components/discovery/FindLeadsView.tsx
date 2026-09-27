@@ -96,16 +96,19 @@ export const FindLeadsView: React.FC = () => {
           <div>
             <h2 className="text-lg font-black text-white tracking-tight flex items-center gap-2">
               <Search className="w-5 h-5 text-indigo-400" />
-              Targeted Prospect Discovery
+              Real Live Business Discovery (GPS & Maps)
             </h2>
             <p className="text-xs text-slate-400">
-              Query compliant public business listings, Google Maps profiles, and verified local directories.
+              Query real-time live business listings with actual street addresses and verified coordinates in your target city.
             </p>
           </div>
 
           {/* Provider Abstraction Selector */}
           <div className="flex items-center gap-2">
-            <span className="text-[11px] text-slate-400 font-semibold">Data Source:</span>
+            <span className="text-[11px] text-emerald-400 font-bold flex items-center gap-1">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              Live Data Source:
+            </span>
             <select
               value={selectedProviderId}
               onChange={(e) => setSelectedProviderId(e.target.value)}
