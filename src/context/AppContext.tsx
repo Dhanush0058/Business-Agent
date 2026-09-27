@@ -76,264 +76,29 @@ const DEFAULT_SETTINGS: AgencySettings = {
   scoringRules: DEFAULT_SCORING_RULES,
 };
 
-const INITIAL_LEADS: Lead[] = [
-  {
-    id: 'lead-sky9-fitness',
-    businessName: 'Sky9 Female Fitness Studio',
-    category: 'Gym & Fitness',
-    location: 'Attapur, Hyderabad',
-    website: '',
-    websiteStatus: 'NO_WEBSITE',
-    phone: '+91 98490 12345',
-    email: 'contact@sky9fitness.in',
-    instagram: '@sky9_fitness_hyd',
-    facebook: '',
-    otherLinks: [],
-    description: 'Exclusive women-only fitness center offering weight loss, Zumba, cross-training and certified female trainers.',
-    services: ['Female Strength Training', 'Zumba Dance Fitness', 'Postpartum Weight Management', 'Personalized Diet Plans'],
-    businessActivity: 'Active daily operations (4.8 stars on Google with 120+ ratings)',
-    googleMapsRef: 'https://maps.google.com/?q=Sky9+Female+Fitness+Studio+Attapur',
-    source: 'Discovery Engine',
-    dateAdded: '2026-09-24T10:00:00.000Z',
-    lastResearched: '2026-09-26T14:30:00.000Z',
-    leadScore: 90,
-    scoreBreakdown: {
-      noWebsiteScore: 30,
-      poorWebsiteScore: 0,
-      activePresenceScore: 20,
-      contactAvailableScore: 10,
-      socialPresenceScore: 10,
-      relevanceScore: 5,
-      totalScore: 90,
-    },
-    priority: 'HOT',
-    status: 'QUALIFIED',
-    assignedTemplate: 'fitness',
-    demoApproved: false,
-    notes: 'Very active on Instagram with regular workout stories, but potential clients currently have nowhere to see full program details or book consultations.',
-    followUps: [
-      {
-        id: 'fu-1',
-        step: 1,
-        label: 'Initial Demo Outreach',
-        scheduledDate: new Date().toISOString().split('T')[0], // Today
-        completed: false,
-        notes: 'Send personalized concept demo showing female fitness programs & WhatsApp instant join.',
-        suggestedMessage: 'Hi Sky9 team, I noticed you do not have an official website yet, so I put together a quick interactive concept...',
-      }
-    ],
-  },
-  {
-    id: 'lead-royal-spice',
-    businessName: 'Royal Spice Biryani & Grill House',
-    category: 'Restaurant & Café',
-    location: 'Indiranagar, Bengaluru',
-    website: 'http://royalspicebiryani-old.ind.in/index.php',
-    websiteStatus: 'POOR',
-    phone: '+91 80 4123 7890',
-    email: 'orders@royalspicegrill.com',
-    instagram: '@royalspice_blr',
-    facebook: '',
-    otherLinks: [],
-    description: 'Traditional Dum Biryani and charcoal grilled kebabs serving authentic Hyderabadi and Awadhi cuisine.',
-    services: ['Dum Biryani Specialties', 'Tandoor & Charcoal Grill', 'Family Dining & Banquets', 'Outdoor Catering'],
-    businessActivity: 'Active busy restaurant with 2,400+ dine-in customers monthly',
-    googleMapsRef: 'https://maps.google.com/?q=Royal+Spice+Biryani+Indiranagar',
-    source: 'Discovery Engine',
-    dateAdded: '2026-09-22T08:30:00.000Z',
-    lastResearched: '2026-09-25T11:00:00.000Z',
-    leadScore: 85,
-    scoreBreakdown: {
-      noWebsiteScore: 0,
-      poorWebsiteScore: 25,
-      activePresenceScore: 20,
-      contactAvailableScore: 10,
-      socialPresenceScore: 10,
-      relevanceScore: 5,
-      totalScore: 85,
-    },
-    priority: 'HOT',
-    status: 'DEMO_GENERATED',
-    assignedTemplate: 'restaurant',
-    demoApproved: false,
-    demoUrl: 'https://demo.dhanexstudio.com/royal-spice-biryani',
-    notes: 'Existing website has slow HTTP and unreadable mobile menu PDF. Needs sensory digital menu and 1-tap WhatsApp table booking.',
-    followUps: [],
-  },
-  {
-    id: 'lead-apex-academy',
-    businessName: 'Apex IIT-JEE & NEET Academy',
-    category: 'Coaching Centre',
-    location: 'Madhapur, Hyderabad',
-    website: 'http://apexacademy2014.wixsite.com/main',
-    websiteStatus: 'POOR',
-    phone: '+91 99887 65432',
-    email: 'admissions@apexacademy.edu.in',
-    instagram: '@apex_academy_hyd',
-    facebook: '',
-    otherLinks: [],
-    description: 'Premier coaching institute with specialized faculty for IIT-JEE Advanced and NEET entrance examinations.',
-    services: ['IIT-JEE 2-Year Integrated Batch', 'NEET Repeaters & Crash Course', 'Weekend Foundation Series', '1-on-1 Mentorship'],
-    businessActivity: 'Active coaching institute with 350+ enrolled students',
-    googleMapsRef: 'https://maps.google.com/?q=Apex+Academy+Madhapur',
-    source: 'Discovery Engine',
-    dateAdded: '2026-09-20T14:15:00.000Z',
-    lastResearched: '2026-09-26T09:00:00.000Z',
-    leadScore: 85,
-    scoreBreakdown: {
-      noWebsiteScore: 0,
-      poorWebsiteScore: 25,
-      activePresenceScore: 20,
-      contactAvailableScore: 10,
-      socialPresenceScore: 10,
-      relevanceScore: 5,
-      totalScore: 85,
-    },
-    priority: 'HOT',
-    status: 'MESSAGE_READY',
-    assignedTemplate: 'education',
-    demoApproved: true,
-    demoApprovedAt: '2026-09-26T10:00:00.000Z',
-    demoUrl: 'https://demo.dhanexstudio.com/apex-iit-jee-academy',
-    notes: 'Admissions open for new batch next month. Approved concept demo highlighting syllabus and free demo class registration.',
-    followUps: [
-      {
-        id: 'fu-2',
-        step: 1,
-        label: 'Send Approved Pitch',
-        scheduledDate: new Date().toISOString().split('T')[0],
-        completed: false,
-        notes: 'Message is ready and demo approved. Send via WhatsApp / Email.',
-        suggestedMessage: 'Hi Apex Academy team, I created an interactive website concept for your upcoming admissions batch...',
-      }
-    ],
-  },
-  {
-    id: 'lead-glow-grace',
-    businessName: 'Glow & Grace Luxury Hair Salon',
-    category: 'Salon & Spa',
-    location: 'Bandra West, Mumbai',
-    website: '',
-    websiteStatus: 'NO_WEBSITE',
-    phone: '+91 98200 55441',
-    email: 'appointments@glowandgrace.com',
-    instagram: '@glowandgrace_bandra',
-    facebook: '',
-    otherLinks: [],
-    description: 'Boutique hair styling and organic skin treatment salon featuring senior creative stylists.',
-    services: ['Balayage & Hair Coloring', 'Keratin & Botox Treatments', 'Bridal Makeover', 'Organic Skin Facials'],
-    businessActivity: 'High footfall weekend bookings, active Instagram stories daily',
-    googleMapsRef: 'https://maps.google.com/?q=Glow+Grace+Salon+Bandra',
-    source: 'Discovery Engine',
-    dateAdded: '2026-09-23T11:20:00.000Z',
-    lastResearched: '2026-09-25T16:00:00.000Z',
-    leadScore: 80,
-    scoreBreakdown: {
-      noWebsiteScore: 30,
-      poorWebsiteScore: 0,
-      activePresenceScore: 20,
-      contactAvailableScore: 10,
-      socialPresenceScore: 10,
-      relevanceScore: 5,
-      totalScore: 80,
-    },
-    priority: 'HOT',
-    status: 'CONTACTED',
-    assignedTemplate: 'fitness',
-    demoApproved: true,
-    demoUrl: 'https://demo.dhanexstudio.com/glow-and-grace-salon',
-    notes: 'Contacted owner via WhatsApp with demo link on Sep 25. Awaiting reply.',
-    followUps: [
-      {
-        id: 'fu-3',
-        step: 2,
-        label: 'Follow-up Check-in',
-        scheduledDate: new Date(Date.now() + 86400000 * 2).toISOString().split('T')[0],
-        completed: false,
-        notes: 'Check if they had a chance to view the salon lookbook concept.',
-        suggestedMessage: 'Hi Glow & Grace team, just checking in to see if you had a chance to look at the concept demo...',
-      }
-    ],
-  },
-  {
-    id: 'lead-urban-pulse',
-    businessName: 'Urban Pulse CrossFit Arena',
-    category: 'Gym & Fitness',
-    location: 'Gachibowli, Hyderabad',
-    website: 'http://urbanpulse-crossfit.blogspot.com',
-    websiteStatus: 'POOR',
-    phone: '+91 97000 88990',
-    email: 'hello@urbanpulse.fit',
-    instagram: '@urbanpulsecrossfit',
-    facebook: '',
-    otherLinks: [],
-    description: 'High intensity functional fitness facility with certified CrossFit Level-2 coaches and open turf area.',
-    services: ['CrossFit WOD Sessions', 'Olympic Weightlifting', 'Endurance & Mobility Bootcamps', 'Body Composition Tracking'],
-    businessActivity: 'Active morning and evening batches with 180+ community members',
-    googleMapsRef: 'https://maps.google.com/?q=Urban+Pulse+CrossFit+Gachibowli',
-    source: 'Discovery Engine',
-    dateAdded: '2026-09-18T10:00:00.000Z',
-    lastResearched: '2026-09-24T12:00:00.000Z',
-    leadScore: 85,
-    scoreBreakdown: {
-      noWebsiteScore: 0,
-      poorWebsiteScore: 25,
-      activePresenceScore: 20,
-      contactAvailableScore: 10,
-      socialPresenceScore: 10,
-      relevanceScore: 5,
-      totalScore: 85,
-    },
-    priority: 'HOT',
-    status: 'WON',
-    assignedTemplate: 'fitness',
-    demoApproved: true,
-    demoUrl: 'https://demo.dhanexstudio.com/urban-pulse-crossfit',
-    notes: 'Client signed ₹28,000 website package after loving the live mobile preview demo! Deployment scheduled.',
-    dealValue: 28000,
-    followUps: [],
-  },
-];
-
-// Initialize helper to pre-fill AI qualifications and demo data
-function hydrateInitialLeads(leads: Lead[]): Lead[] {
-  return leads.map((l) => {
-    const analysis = l.websiteAnalysis || analyzeWebsite(l.website, l.businessName, l.category);
-    const qual = l.aiQualification || runAIQualification({ ...l, websiteAnalysis: analysis });
-    const demo = l.demoCustomization || generatePersonalizedDemoData(l, l.assignedTemplate);
-    const outreach = l.outreachMessage || generateOutreachMessage(l, DEFAULT_SETTINGS, 'friendly', l.demoUrl);
-
-    return {
-      ...l,
-      websiteAnalysis: analysis,
-      aiQualification: qual,
-      demoCustomization: demo,
-      outreachMessage: outreach,
-    };
-  });
-}
+const INITIAL_LEADS: Lead[] = [];
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [leads, setLeads] = useState<Lead[]>(() => {
     try {
-      const saved = localStorage.getItem('dhanex_leads_v2');
+      const saved = localStorage.getItem('dhanex_leads_live');
       if (saved) {
         return JSON.parse(saved);
       }
     } catch (e) {
       console.error(e);
     }
-    return hydrateInitialLeads(INITIAL_LEADS);
+    return [];
   });
 
-  const [activeTab, setActiveTab] = useState<string>('dashboard');
+  const [activeTab, setActiveTab] = useState<string>('find-leads');
   const [selectedLeadId, setSelectedLeadId] = useState<string | null>(null);
 
   const [settings, setSettings] = useState<AgencySettings>(() => {
     try {
-      const saved = localStorage.getItem('dhanex_settings_v2');
+      const saved = localStorage.getItem('dhanex_settings_live');
       if (saved) {
         return JSON.parse(saved);
       }
@@ -348,7 +113,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Persist leads
   useEffect(() => {
     try {
-      localStorage.setItem('dhanex_leads_v2', JSON.stringify(leads));
+      localStorage.setItem('dhanex_leads_live', JSON.stringify(leads));
     } catch (e) {
       console.error(e);
     }
@@ -357,7 +122,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Persist settings
   useEffect(() => {
     try {
-      localStorage.setItem('dhanex_settings_v2', JSON.stringify(settings));
+      localStorage.setItem('dhanex_settings_live', JSON.stringify(settings));
     } catch (e) {
       console.error(e);
     }
@@ -711,10 +476,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const resetToDefaultSeedData = () => {
-    const fresh = hydrateInitialLeads(INITIAL_LEADS);
-    setLeads(fresh);
-    setSettings(DEFAULT_SETTINGS);
-    showToast('Reset to demo dataset successfully!', 'info');
+    setLeads([]);
+    localStorage.removeItem('dhanex_leads_live');
+    localStorage.removeItem('dhanex_leads_v2');
+    showToast('All leads cleared. System is fresh for real live prospect data.', 'info');
   };
 
   return (
