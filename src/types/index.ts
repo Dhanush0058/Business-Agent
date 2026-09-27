@@ -207,7 +207,8 @@ export interface AgencySettings {
   demoDisclaimer: string;
   deploymentProvider: 'local' | 'vercel' | 'netlify' | 'cloudflare';
   customDomain: string;
-  aiProvider: 'local-smart' | 'gemini' | 'openai';
+  aiProvider: 'local-smart' | 'gemini' | 'groq' | 'openai';
   apiKey: string;
+  groqApiKey?: string;
   scoringRules: ScoringRules;
 }

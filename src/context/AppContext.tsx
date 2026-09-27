@@ -11,6 +11,7 @@ import { DEFAULT_SCORING_RULES, calculateLeadScore } from '../services/scoringEn
 import { analyzeWebsite } from '../services/websiteAnalyzer';
 import { runAIQualification, generateOutreachMessage } from '../services/aiAdvisor';
 import { runLiveGeminiAnalysis, runLiveGeminiOutreach } from '../services/geminiService';
+import { runLiveGroqAnalysis, runLiveGroqOutreach } from '../services/groqService';
 import { generatePersonalizedDemoData } from '../services/templateRegistry';
 import { DEPLOYMENT_PROVIDERS } from '../services/deploymentProviders';
 import confetti from 'canvas-confetti';
@@ -351,10 +352,18 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (!lead) return;
 
     let msg = null;
-    if (settings.aiProvider === 'gemini' && settings.apiKey) {
+
+    // 1. Try Groq if selected or if Groq key is available
+    if (settings.aiProvider === 'groq' || (!msg && (settings.groqApiKey || (import.meta as any).env?.VITE_GROQ_API_KEY))) {
+      msg = await runLiveGroqOutreach(lead, settings, tone, lead.demoUrl || '', settings.groqApiKey);
+    }
+
+    // 2. Fallback to Gemini if selected or key is present
+    if (!msg && (settings.aiProvider === 'gemini' || settings.apiKey || (import.meta as any).env?.VITE_GEMINI_API_KEY)) {
       msg = await runLiveGeminiOutreach(lead, settings, tone, lead.demoUrl || '', settings.apiKey);
     }
 
+    // 3. Fallback to offline rule-based heuristic generation
     if (!msg) {
       msg = generateOutreachMessage(lead, settings, tone, lead.demoUrl);
     }
