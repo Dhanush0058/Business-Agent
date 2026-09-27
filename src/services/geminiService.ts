@@ -3,9 +3,10 @@ import { matchTemplateForCategory } from './templateRegistry';
 
 export async function runLiveGeminiAnalysis(
   lead: Lead,
-  apiKey: string
+  apiKey?: string
 ): Promise<AIQualification | null> {
-  if (!apiKey || apiKey.trim() === '') {
+  const effectiveKey = (apiKey || (import.meta as any).env?.VITE_GEMINI_API_KEY || '').trim();
+  if (!effectiveKey) {
     return null;
   }
 
@@ -37,7 +38,7 @@ Rules:
 
   try {
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey.trim()}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${effectiveKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -80,9 +81,10 @@ export async function runLiveGeminiOutreach(
   settings: AgencySettings,
   tone: 'professional' | 'friendly' | 'short',
   demoUrl: string,
-  apiKey: string
+  apiKey?: string
 ): Promise<OutreachMessage | null> {
-  if (!apiKey || apiKey.trim() === '') {
+  const effectiveKey = (apiKey || settings.apiKey || (import.meta as any).env?.VITE_GEMINI_API_KEY || '').trim();
+  if (!effectiveKey) {
     return null;
   }
 
@@ -110,7 +112,7 @@ Return ONLY a JSON object:
 
   try {
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey.trim()}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${effectiveKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
