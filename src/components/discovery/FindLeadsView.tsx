@@ -9,84 +9,152 @@ import {
   ListFilter,
   Sparkles,
   Phone,
-  Mail,
-  ExternalLink,
-  CheckCircle2,
-  Flame,
+  RotateCw,
   Globe,
   Plus,
-  Layers,
-  ArrowRight,
+  Trash2,
+  CheckCircle2,
 } from 'lucide-react';
 import { InstagramIcon } from '../ui/InstagramIcon';
 
 export const FindLeadsView: React.FC = () => {
-  const { batchImportLeads, setSelectedLeadId, setActiveTab, showToast, generateDemoForLead } = useApp();
-
-  const [category, setCategory] = useState<string>('Gym & Fitness');
-  const [location, setLocation] = useState<string>('Hyderabad');
-  const [limit, setLimit] = useState<number>(10);
-  const [websiteRequirement, setWebsiteRequirement] = useState<'any' | 'no_website' | 'poor_website'>('no_website');
-  const [contactPreference, setContactPreference] = useState<'all' | 'phone' | 'email' | 'social'>('all');
-  const [selectedProviderId, setSelectedProviderId] = useState<string>(LEAD_PROVIDERS[0].id);
+  const {
+    batchImportLeads,
+    setSelectedLeadId,
+    setActiveTab,
+    showToast,
+    generateDemoForLead,
+    discoveredLeads,
+    setDiscoveredLeads,
+    selectedDiscoveryIds,
+    setSelectedDiscoveryIds,
+    discoveryOffset,
+    setDiscoveryOffset,
+    discoveryCategory,
+    setDiscoveryCategory,
+    discoveryLocation,
+    setDiscoveryLocation,
+    discoveryLimit,
+    setDiscoveryLimit,
+    discoveryWebsiteRequirement,
+    setDiscoveryWebsiteRequirement,
+    discoveryProviderId,
+    setDiscoveryProviderId,
+  } = useApp();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [discoveredLeads, setDiscoveredLeads] = useState<Lead[]>([]);
-  const [selectedLeadIds, setSelectedLeadIds] = useState<string[]>([]);
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
 
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setDiscoveredLeads([]);
-    setSelectedLeadIds([]);
-
+  const executeSearch = async (offsetToUse: number, append: boolean = false) => {
     try {
-      const provider = LEAD_PROVIDERS.find((p) => p.id === selectedProviderId) || LEAD_PROVIDERS[0];
+      const provider = LEAD_PROVIDERS.find((p) => p.id === discoveryProviderId) || LEAD_PROVIDERS[0];
       const criteria: DiscoveryCriteria = {
-        category,
-        location,
-        limit,
-        websiteRequirement,
-        contactPreference,
+        category: discoveryCategory,
+        location: discoveryLocation,
+        limit: discoveryLimit,
+        offset: offsetToUse,
+        websiteRequirement: discoveryWebsiteRequirement,
+        contactPreference: 'all',
       };
 
       const results = await provider.search(criteria);
-      setDiscoveredLeads(results);
-      setSelectedLeadIds(results.map((r) => r.id));
-      showToast(`Discovered ${results.length} legitimate prospects in ${location}!`, 'success');
+
+      if (results.length === 0) {
+        showToast(`No more unique places found for ${discoveryCategory} in ${discoveryLocation} at offset ${offsetToUse}. Try resetting or changing location.`, 'info');
+        return;
+      }
+
+      if (append) {
+        // Merge and deduplicate by name
+        const existingNames = new Set(discoveredLeads.map((l) => l.businessName.toLowerCase()));
+        const uniqueNew = results.filter((l) => !existingNames.has(l.businessName.toLowerCase()));
+        const merged = [...discoveredLeads, ...uniqueNew];
+        setDiscoveredLeads(merged);
+        setSelectedDiscoveryIds(merged.map((l) => l.id));
+        showToast(`Discovered ${uniqueNew.length} new unique prospects (Total: ${merged.length})!`, 'success');
+      } else {
+        setDiscoveredLeads(results);
+        setSelectedDiscoveryIds(results.map((r) => r.id));
+        showToast(`Discovered ${results.length} unique prospects in ${discoveryLocation} (Batch offset: ${offsetToUse})!`, 'success');
+      }
     } catch (err) {
       console.error(err);
-      showToast('Error discovering leads. Please check your query or provider settings.', 'error');
+      showToast('Error discovering leads. Please check your network or server status.', 'error');
+    }
+  };
+
+  const handleInitialSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setDiscoveryOffset(0);
+    try {
+      await executeSearch(0, false);
     } finally {
       setIsLoading(false);
     }
   };
 
+  const handleDiscoverNextBatch = async () => {
+    setIsRefreshing(true);
+    const nextOffset = discoveryOffset + discoveryLimit;
+    setDiscoveryOffset(nextOffset);
+    try {
+      await executeSearch(nextOffset, false);
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
+  const handleAppendNextBatch = async () => {
+    setIsRefreshing(true);
+    const nextOffset = discoveryOffset + discoveryLimit;
+    setDiscoveryOffset(nextOffset);
+    try {
+      await executeSearch(nextOffset, true);
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
+  const handleResetOffset = () => {
+    setDiscoveryOffset(0);
+    showToast('Reset search offset to 0.', 'info');
+  };
+
+  const handleClearResults = () => {
+    setDiscoveredLeads([]);
+    setSelectedDiscoveryIds([]);
+    setDiscoveryOffset(0);
+    showToast('Cleared discovered results list.', 'info');
+  };
+
   const handleToggleSelectAll = () => {
-    if (selectedLeadIds.length === discoveredLeads.length) {
-      setSelectedLeadIds([]);
+    if (selectedDiscoveryIds.length === discoveredLeads.length) {
+      setSelectedDiscoveryIds([]);
     } else {
-      setSelectedLeadIds(discoveredLeads.map((l) => l.id));
+      setSelectedDiscoveryIds(discoveredLeads.map((l) => l.id));
     }
   };
 
   const handleToggleSelectLead = (id: string) => {
-    setSelectedLeadIds((prev) =>
+    setSelectedDiscoveryIds((prev) =>
       prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
     );
   };
 
   const handleImportSelected = () => {
-    const toImport = discoveredLeads.filter((l) => selectedLeadIds.includes(l.id));
+    const toImport = discoveredLeads.filter((l) => selectedDiscoveryIds.includes(l.id));
     if (toImport.length === 0) {
       showToast('Please select at least one lead to import', 'warning');
       return;
     }
     batchImportLeads(toImport);
-    setDiscoveredLeads((prev) => prev.filter((l) => !selectedLeadIds.includes(l.id)));
-    setSelectedLeadIds([]);
+    setDiscoveredLeads((prev) => prev.filter((l) => !selectedDiscoveryIds.includes(l.id)));
+    setSelectedDiscoveryIds([]);
     setActiveTab('leads');
   };
+
+  const currentBatchNum = Math.floor(discoveryOffset / discoveryLimit) + 1;
 
   return (
     <div className="space-y-8 pb-12">
@@ -110,8 +178,8 @@ export const FindLeadsView: React.FC = () => {
               Live Data Source:
             </span>
             <select
-              value={selectedProviderId}
-              onChange={(e) => setSelectedProviderId(e.target.value)}
+              value={discoveryProviderId}
+              onChange={(e) => setDiscoveryProviderId(e.target.value)}
               className="bg-slate-950 border border-slate-750 text-white text-xs font-semibold rounded-xl px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             >
               {LEAD_PROVIDERS.map((p) => (
@@ -123,7 +191,7 @@ export const FindLeadsView: React.FC = () => {
           </div>
         </div>
 
-        <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <form onSubmit={handleInitialSearch} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
           {/* Business Category */}
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-slate-300 flex items-center gap-1.5">
@@ -131,17 +199,20 @@ export const FindLeadsView: React.FC = () => {
               Business Category
             </label>
             <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              value={discoveryCategory}
+              onChange={(e) => {
+                setDiscoveryCategory(e.target.value);
+                setDiscoveryOffset(0);
+              }}
               className="w-full bg-slate-950 border border-slate-750 rounded-xl px-3 py-2 text-xs text-white font-medium focus:ring-1 focus:ring-indigo-500 focus:outline-none"
             >
               <option value="Gym & Fitness">Gym & Fitness Studios</option>
+              <option value="Hotel">Hotels & Hospitality (Hotels, Resorts, Lodges)</option>
               <option value="Restaurant & Café">Restaurants & Cafés</option>
               <option value="Coaching Centre">Coaching & Education</option>
               <option value="Salon & Spa">Salons & Spas</option>
               <option value="Real Estate">Real Estate Agencies</option>
               <option value="Photography">Photography Studios</option>
-              <option value="Hotel">Hotels & Resorts</option>
               <option value="Local Business">Other Local Services</option>
             </select>
           </div>
@@ -153,8 +224,11 @@ export const FindLeadsView: React.FC = () => {
               Target Location
             </label>
             <select
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
+              value={discoveryLocation}
+              onChange={(e) => {
+                setDiscoveryLocation(e.target.value);
+                setDiscoveryOffset(0);
+              }}
               className="w-full bg-slate-950 border border-slate-750 rounded-xl px-3 py-2 text-xs text-white font-medium focus:ring-1 focus:ring-indigo-500 focus:outline-none"
             >
               <option value="Hyderabad">Hyderabad</option>
@@ -163,6 +237,7 @@ export const FindLeadsView: React.FC = () => {
               <option value="Delhi NCR">Delhi NCR</option>
               <option value="Chennai">Chennai</option>
               <option value="Pune">Pune</option>
+              <option value="Goa">Goa</option>
               <option value="London">London, UK</option>
               <option value="New York">New York, USA</option>
             </select>
@@ -175,8 +250,8 @@ export const FindLeadsView: React.FC = () => {
               Website Status Filter
             </label>
             <select
-              value={websiteRequirement}
-              onChange={(e) => setWebsiteRequirement(e.target.value as any)}
+              value={discoveryWebsiteRequirement}
+              onChange={(e) => setDiscoveryWebsiteRequirement(e.target.value as any)}
               className="w-full bg-slate-950 border border-slate-750 rounded-xl px-3 py-2 text-xs text-white font-medium focus:ring-1 focus:ring-indigo-500 focus:outline-none"
             >
               <option value="no_website">No Website (High Opportunity)</option>
@@ -192,8 +267,8 @@ export const FindLeadsView: React.FC = () => {
               Number of Leads
             </label>
             <select
-              value={limit}
-              onChange={(e) => setLimit(Number(e.target.value))}
+              value={discoveryLimit}
+              onChange={(e) => setDiscoveryLimit(Number(e.target.value))}
               className="w-full bg-slate-950 border border-slate-750 rounded-xl px-3 py-2 text-xs text-white font-medium focus:ring-1 focus:ring-indigo-500 focus:outline-none"
             >
               <option value={10}>10 Prospects</option>
@@ -206,7 +281,7 @@ export const FindLeadsView: React.FC = () => {
           <div className="flex items-end">
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={isLoading || isRefreshing}
               className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 active:scale-95 text-white font-bold text-xs shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition-all disabled:opacity-50"
             >
               {isLoading ? (
@@ -217,7 +292,7 @@ export const FindLeadsView: React.FC = () => {
               ) : (
                 <>
                   <Search className="w-4 h-4" />
-                  <span>Find Leads</span>
+                  <span>Find Leads (Batch 1)</span>
                 </>
               )}
             </button>
@@ -228,26 +303,55 @@ export const FindLeadsView: React.FC = () => {
       {/* Discovered Results Table */}
       {discoveredLeads.length > 0 && (
         <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-4 animate-in fade-in duration-300">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-4">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800 pb-4">
             <div>
-              <h3 className="text-base font-bold text-white tracking-tight flex items-center gap-2">
-                <span>Discovered Prospects ({discoveredLeads.length})</span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-semibold">
-                  {selectedLeadIds.length} Selected
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="text-base font-bold text-white tracking-tight">
+                  Discovered Prospects ({discoveredLeads.length})
+                </h3>
+                <span className="text-xs px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-semibold">
+                  {selectedDiscoveryIds.length} Selected
                 </span>
-              </h3>
-              <p className="text-xs text-slate-400">
-                Review automated opportunity assessment and import qualified prospects into CRM.
+                <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 font-medium">
+                  📍 Batch #{currentBatchNum} (Offset: {discoveryOffset})
+                </span>
+              </div>
+              <p className="text-xs text-slate-400 mt-1">
+                Persistent search session: Leads remain visible when you navigate between CRM, Analyzer, and Outreach tabs.
               </p>
             </div>
 
-            <div className="flex items-center gap-2">
+            {/* Pagination & Refresh Controls */}
+            <div className="flex items-center gap-2 flex-wrap">
+              {/* Refresh / Next Batch Button */}
+              <button
+                type="button"
+                onClick={handleDiscoverNextBatch}
+                disabled={isRefreshing || isLoading}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold shadow-md shadow-emerald-900/30 transition-all disabled:opacity-50"
+                title="Fetch the next batch of completely different businesses for this category"
+              >
+                <RotateCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin' : ''}`} />
+                <span>{isRefreshing ? 'Fetching Next...' : `Next Different Batch (Offset +${discoveryLimit})`}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleAppendNextBatch}
+                disabled={isRefreshing || isLoading}
+                className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-colors"
+                title="Fetch more and add them to this table without clearing existing leads"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                <span>Append More</span>
+              </button>
+
               <button
                 type="button"
                 onClick={handleToggleSelectAll}
-                className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-colors"
+                className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-colors"
               >
-                {selectedLeadIds.length === discoveredLeads.length ? 'Deselect All' : 'Select All'}
+                {selectedDiscoveryIds.length === discoveredLeads.length ? 'Deselect All' : 'Select All'}
               </button>
 
               <button
@@ -256,7 +360,16 @@ export const FindLeadsView: React.FC = () => {
                 className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md shadow-indigo-600/20 transition-all"
               >
                 <Plus className="w-4 h-4" />
-                <span>Import {selectedLeadIds.length} to CRM</span>
+                <span>Import {selectedDiscoveryIds.length} to CRM</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleClearResults}
+                className="p-1.5 rounded-xl bg-slate-800/80 hover:bg-rose-950 hover:text-rose-400 text-slate-400 transition-colors"
+                title="Clear current discovered leads table"
+              >
+                <Trash2 className="w-4 h-4" />
               </button>
             </div>
           </div>
@@ -279,13 +392,13 @@ export const FindLeadsView: React.FC = () => {
                   <tr
                     key={lead.id}
                     className={`hover:bg-slate-800/40 transition-colors ${
-                      selectedLeadIds.includes(lead.id) ? 'bg-indigo-950/10' : ''
+                      selectedDiscoveryIds.includes(lead.id) ? 'bg-indigo-950/10' : ''
                     }`}
                   >
                     <td className="py-3 px-3">
                       <input
                         type="checkbox"
-                        checked={selectedLeadIds.includes(lead.id)}
+                        checked={selectedDiscoveryIds.includes(lead.id)}
                         onChange={() => handleToggleSelectLead(lead.id)}
                         className="rounded border-slate-700 text-indigo-600 focus:ring-indigo-500 bg-slate-900 cursor-pointer"
                       />

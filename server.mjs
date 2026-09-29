@@ -264,11 +264,11 @@ Return ONLY a raw JSON object (no backticks, no markdown):
 
 // 4. Geoapify Places Search Endpoint
 app.post('/api/places/search', async (req, res) => {
-  const { category, location, limit = 10, apiKey } = req.body;
+  const { category, location, limit = 10, offset = 0, apiKey } = req.body;
   const keys = getEffectiveKeys();
   const effectiveKey = (apiKey || keys.geoapify).trim();
 
-  log.maps(`Searching live places: "${category}" in "${location}" (limit: ${limit})`);
+  log.maps(`Searching live places: "${category}" in "${location}" (limit: ${limit}, offset: ${offset})`);
 
   if (!effectiveKey) {
     log.warn('Geoapify API key is missing');
@@ -295,14 +295,25 @@ app.post('/api/places/search', async (req, res) => {
 
     const [lon, lat] = cityFeature.geometry.coordinates;
 
-    // 2. Map category
+    // 2. Comprehensive category mapping
     let geoCat = 'catering.restaurant,sport.fitness,education.school';
     const catLower = (category || '').toLowerCase();
-    if (catLower.includes('gym') || catLower.includes('fitness')) geoCat = 'sport.fitness,sport.sports_centre';
-    else if (catLower.includes('restaurant') || catLower.includes('caf')) geoCat = 'catering.restaurant,catering.cafe';
-    else if (catLower.includes('coaching') || catLower.includes('education')) geoCat = 'education.school,education.college';
+    if (catLower.includes('hotel') || catLower.includes('resort') || catLower.includes('lodge') || catLower.includes('stay') || catLower.includes('hospitality')) {
+      geoCat = 'accommodation.hotel,accommodation.guest_house,accommodation.motel,accommodation.resort';
+    } else if (catLower.includes('gym') || catLower.includes('fitness') || catLower.includes('yoga') || catLower.includes('crossfit')) {
+      geoCat = 'sport.fitness,sport.sports_centre,activity.sport_club';
+    } else if (catLower.includes('restaurant') || catLower.includes('caf') || catLower.includes('food') || catLower.includes('bistro') || catLower.includes('bakery') || catLower.includes('dining')) {
+      geoCat = 'catering.restaurant,catering.cafe,catering.fast_food,catering.bar';
+    } else if (catLower.includes('salon') || catLower.includes('spa') || catLower.includes('beauty') || catLower.includes('parlour') || catLower.includes('hair')) {
+      geoCat = 'service.beauty.hairdresser,service.beauty.spa,service.beauty';
+    } else if (catLower.includes('coaching') || catLower.includes('education') || catLower.includes('school') || catLower.includes('academy') || catLower.includes('college') || catLower.includes('institute') || catLower.includes('tuition')) {
+      geoCat = 'education.school,education.college,education.training,education.university';
+    } else if (catLower.includes('health') || catLower.includes('clinic') || catLower.includes('hospital') || catLower.includes('dentist')) {
+      geoCat = 'healthcare.hospital,healthcare.clinic,healthcare.dentist';
+    }
 
-    const placesUrl = `https://api.geoapify.com/v2/places?categories=${geoCat}&filter=circle:${lon},${lat},20000&bias=proximity:${lon},${lat}&limit=${limit}&apiKey=${effectiveKey}`;
+    const radius = 25000; // 25km radius
+    const placesUrl = `https://api.geoapify.com/v2/places?categories=${geoCat}&filter=circle:${lon},${lat},${radius}&bias=proximity:${lon},${lat}&limit=${limit}&offset=${offset}&apiKey=${effectiveKey}`;
     const placesRes = await fetch(placesUrl);
     const ms = Date.now() - start;
 
@@ -314,11 +325,12 @@ app.post('/api/places/search', async (req, res) => {
     const placesData = await placesRes.json();
     const features = placesData?.features || [];
 
-    log.success(`Discovered ${features.length} live places in "${location}" in ${ms}ms`);
+    log.success(`Discovered ${features.length} live places in "${location}" (offset: ${offset}) in ${ms}ms`);
     return res.json({
       success: true,
       latencyMs: ms,
       count: features.length,
+      offset,
       features,
     });
   } catch (err) {

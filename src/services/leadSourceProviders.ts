@@ -6,6 +6,7 @@ export interface DiscoveryCriteria {
   category: string;
   location: string;
   limit: number;
+  offset?: number;
   websiteRequirement: 'any' | 'no_website' | 'poor_website';
   contactPreference: 'all' | 'phone' | 'email' | 'social';
 }
@@ -53,6 +54,7 @@ export class GeoapifyPlacesProvider implements LeadSourceProvider {
       category: criteria.category,
       location: criteria.location,
       limit: criteria.limit,
+      offset: criteria.offset || 0,
     });
 
     if (results.length === 0) {

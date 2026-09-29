@@ -7,18 +7,22 @@ export interface GeoapifyQuery {
   category: string;
   location: string;
   limit: number;
+  offset?: number;
   apiKey?: string;
 }
 
 function getGeoapifyCategories(category: string): string {
   const cat = category.toLowerCase();
-  if (cat.includes('fitness') || cat.includes('gym')) {
+  if (cat.includes('hotel') || cat.includes('resort') || cat.includes('lodge') || cat.includes('stay') || cat.includes('hospitality')) {
+    return 'accommodation.hotel,accommodation.guest_house,accommodation.motel,accommodation.resort';
+  }
+  if (cat.includes('fitness') || cat.includes('gym') || cat.includes('yoga') || cat.includes('crossfit')) {
     return 'sport.fitness,sport.sports_centre,activity.sport_club';
   }
-  if (cat.includes('restaurant') || cat.includes('caf') || cat.includes('dining')) {
+  if (cat.includes('restaurant') || cat.includes('caf') || cat.includes('dining') || cat.includes('food') || cat.includes('bistro')) {
     return 'catering.restaurant,catering.cafe,catering.fast_food';
   }
-  if (cat.includes('coaching') || cat.includes('education') || cat.includes('school')) {
+  if (cat.includes('coaching') || cat.includes('education') || cat.includes('school') || cat.includes('academy')) {
     return 'education.school,education.college,education.training';
   }
   if (cat.includes('salon') || cat.includes('spa') || cat.includes('beauty')) {
@@ -40,6 +44,7 @@ export async function fetchGeoapifyPlaces(query: GeoapifyQuery): Promise<Lead[]>
         category: query.category,
         location: query.location,
         limit: query.limit,
+        offset: query.offset || 0,
         apiKey: query.apiKey,
       }),
     });

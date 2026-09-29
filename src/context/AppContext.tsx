@@ -55,6 +55,24 @@ interface AppContextType {
   rescheduleFollowUp: (leadId: string, followUpId: string, newDate: string) => void;
   deleteFollowUp: (leadId: string, followUpId: string) => void;
 
+  // Discovery / Research persisted state
+  discoveredLeads: Lead[];
+  setDiscoveredLeads: React.Dispatch<React.SetStateAction<Lead[]>>;
+  selectedDiscoveryIds: string[];
+  setSelectedDiscoveryIds: React.Dispatch<React.SetStateAction<string[]>>;
+  discoveryOffset: number;
+  setDiscoveryOffset: React.Dispatch<React.SetStateAction<number>>;
+  discoveryCategory: string;
+  setDiscoveryCategory: (cat: string) => void;
+  discoveryLocation: string;
+  setDiscoveryLocation: (loc: string) => void;
+  discoveryLimit: number;
+  setDiscoveryLimit: (lim: number) => void;
+  discoveryWebsiteRequirement: 'any' | 'no_website' | 'poor_website';
+  setDiscoveryWebsiteRequirement: (req: 'any' | 'no_website' | 'poor_website') => void;
+  discoveryProviderId: string;
+  setDiscoveryProviderId: (id: string) => void;
+
   // State reset
   resetToDefaultSeedData: () => void;
 }
@@ -118,6 +136,94 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   });
 
   const [toasts, setToasts] = useState<Toast[]>([]);
+
+  // Persisted Discovery / Research Page State (survives tab navigation)
+  const [discoveredLeads, setDiscoveredLeads] = useState<Lead[]>(() => {
+    try {
+      const saved = sessionStorage.getItem('dhanex_discovered_leads');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.error(e);
+    }
+    return [];
+  });
+
+  const [selectedDiscoveryIds, setSelectedDiscoveryIds] = useState<string[]>(() => {
+    try {
+      const saved = sessionStorage.getItem('dhanex_discovered_selected');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.error(e);
+    }
+    return [];
+  });
+
+  const [discoveryOffset, setDiscoveryOffset] = useState<number>(() => {
+    try {
+      const saved = sessionStorage.getItem('dhanex_discovery_offset');
+      if (saved) return Number(saved);
+    } catch (e) {
+      console.error(e);
+    }
+    return 0;
+  });
+
+  const [discoveryCategory, setDiscoveryCategory] = useState<string>(() => {
+    return sessionStorage.getItem('dhanex_discovery_cat') || 'Gym & Fitness';
+  });
+
+  const [discoveryLocation, setDiscoveryLocation] = useState<string>(() => {
+    return sessionStorage.getItem('dhanex_discovery_loc') || 'Hyderabad';
+  });
+
+  const [discoveryLimit, setDiscoveryLimit] = useState<number>(() => {
+    return Number(sessionStorage.getItem('dhanex_discovery_limit')) || 10;
+  });
+
+  const [discoveryWebsiteRequirement, setDiscoveryWebsiteRequirement] = useState<'any' | 'no_website' | 'poor_website'>(() => {
+    return (sessionStorage.getItem('dhanex_discovery_webreq') as any) || 'no_website';
+  });
+
+  const [discoveryProviderId, setDiscoveryProviderId] = useState<string>(() => {
+    return sessionStorage.getItem('dhanex_discovery_prov') || 'geoapify-places';
+  });
+
+  // Sync discovery state to sessionStorage
+  useEffect(() => {
+    try {
+      sessionStorage.setItem('dhanex_discovered_leads', JSON.stringify(discoveredLeads));
+    } catch (e) {
+      console.error(e);
+    }
+  }, [discoveredLeads]);
+
+  useEffect(() => {
+    try {
+      sessionStorage.setItem('dhanex_discovered_selected', JSON.stringify(selectedDiscoveryIds));
+    } catch (e) {
+      console.error(e);
+    }
+  }, [selectedDiscoveryIds]);
+
+  useEffect(() => {
+    try {
+      sessionStorage.setItem('dhanex_discovery_offset', String(discoveryOffset));
+    } catch (e) {
+      console.error(e);
+    }
+  }, [discoveryOffset]);
+
+  useEffect(() => {
+    try {
+      sessionStorage.setItem('dhanex_discovery_cat', discoveryCategory);
+      sessionStorage.setItem('dhanex_discovery_loc', discoveryLocation);
+      sessionStorage.setItem('dhanex_discovery_limit', String(discoveryLimit));
+      sessionStorage.setItem('dhanex_discovery_webreq', discoveryWebsiteRequirement);
+      sessionStorage.setItem('dhanex_discovery_prov', discoveryProviderId);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [discoveryCategory, discoveryLocation, discoveryLimit, discoveryWebsiteRequirement, discoveryProviderId]);
 
   // Persist leads
   useEffect(() => {
@@ -527,6 +633,22 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         completeFollowUp,
         rescheduleFollowUp,
         deleteFollowUp,
+        discoveredLeads,
+        setDiscoveredLeads,
+        selectedDiscoveryIds,
+        setSelectedDiscoveryIds,
+        discoveryOffset,
+        setDiscoveryOffset,
+        discoveryCategory,
+        setDiscoveryCategory,
+        discoveryLocation,
+        setDiscoveryLocation,
+        discoveryLimit,
+        setDiscoveryLimit,
+        discoveryWebsiteRequirement,
+        setDiscoveryWebsiteRequirement,
+        discoveryProviderId,
+        setDiscoveryProviderId,
         resetToDefaultSeedData,
       }}
     >

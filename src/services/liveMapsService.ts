@@ -27,6 +27,15 @@ const CITY_CENTERS: Record<string, { lat: number; lon: number; radiusKm: number 
 
 function getCategoryFilters(category: string): string[] {
   const cat = category.toLowerCase();
+  if (cat.includes('hotel') || cat.includes('resort') || cat.includes('lodge') || cat.includes('hospitality') || cat.includes('stay')) {
+    return [
+      '["tourism"="hotel"]',
+      '["tourism"="guest_house"]',
+      '["tourism"="resort"]',
+      '["tourism"="motel"]',
+      '["tourism"="hostel"]',
+    ];
+  }
   if (cat.includes('fitness') || cat.includes('gym')) {
     return [
       '["leisure"="fitness_centre"]',
