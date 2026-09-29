@@ -31,6 +31,96 @@ function getGeoapifyCategories(category: string): string {
 }
 
 export async function fetchGeoapifyPlaces(query: GeoapifyQuery): Promise<Lead[]> {
+  // 1. Prioritize Secure Backend Proxy
+  try {
+    const backendRes = await fetch('/api/places/search', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        category: query.category,
+        location: query.location,
+        limit: query.limit,
+        apiKey: query.apiKey,
+      }),
+    });
+    if (backendRes.ok) {
+      const json = await backendRes.json();
+      const features = json?.features || [];
+      if (features.length > 0) {
+        return features
+          .filter((f: any) => f.properties && f.properties.name)
+          .map((f: any, idx: number) => {
+            const p = f.properties;
+            const bName = p.name;
+            const web = p.contact?.website || p.datasource?.raw?.website || '';
+            const phone = p.contact?.phone || p.datasource?.raw?.phone || '';
+            const email = p.contact?.email || p.datasource?.raw?.email || '';
+            const street = p.street || p.suburb || p.district || query.location;
+            const fullLocation = p.formatted || `${street}, ${query.location}`;
+            const pLat = p.lat;
+            const pLon = p.lon;
+            const gMapsRef = pLat && pLon
+              ? `https://www.google.com/maps?q=${pLat},${pLon}`
+              : `https://maps.google.com/?q=${encodeURIComponent(bName + ' ' + query.location)}`;
+
+            const analysis = analyzeWebsite(web, bName, query.category);
+            const leadId = `geo-${Date.now()}-${idx}`;
+            const rawLead: Partial<Lead> = {
+              id: leadId,
+              businessName: bName,
+              category: query.category,
+              location: fullLocation,
+              website: web,
+              websiteStatus: analysis.status,
+              phone,
+              email,
+              businessActivity: 'Verified map listing',
+            };
+            const scoreResult = calculateLeadScore(rawLead);
+            const qual = runAIQualification({
+              ...rawLead,
+              id: leadId,
+              websiteAnalysis: analysis,
+              leadScore: scoreResult.score,
+            } as Lead);
+
+            return {
+              id: leadId,
+              businessName: bName,
+              category: query.category,
+              location: fullLocation,
+              website: web,
+              websiteStatus: analysis.status,
+              websiteAnalysis: analysis,
+              phone,
+              email,
+              instagram: '',
+              facebook: '',
+              otherLinks: [],
+              description: p.categories?.join(', ') || `Local ${query.category} business in ${query.location}`,
+              services: [],
+              businessActivity: 'Active on OpenStreetMap / Google Maps',
+              googleMapsRef: gMapsRef,
+              source: 'Live Geoapify Maps Discovery',
+              dateAdded: new Date().toISOString(),
+              lastResearched: new Date().toISOString(),
+              leadScore: scoreResult.score,
+              scoreBreakdown: scoreResult.breakdown,
+              priority: scoreResult.priority,
+              status: 'NEW',
+              assignedTemplate: query.category.toLowerCase().includes('fitness') || query.category.toLowerCase().includes('gym') ? 'fitness' : query.category.toLowerCase().includes('restaurant') ? 'restaurant' : 'education',
+              demoApproved: false,
+              aiQualification: qual,
+              followUps: [],
+              notes: `Discovered near ${query.location}. Real coordinates: [${pLon || 'N/A'}, ${pLat || 'N/A'}]`,
+            } as Lead;
+          });
+      }
+    }
+  } catch (backendErr) {
+    // Fallback if backend server is not running
+  }
+
   const key = (
     query.apiKey ||
     (import.meta as any).env?.VITE_GEOAPIFY_API_KEY ||

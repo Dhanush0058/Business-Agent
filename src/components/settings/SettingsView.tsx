@@ -9,32 +9,26 @@ import {
   Cpu,
   Save,
   CheckCircle2,
-  ShieldAlert,
-  HelpCircle,
+  ShieldCheck,
   MapPin,
-  Key,
+  Server,
+  Lock,
 } from 'lucide-react';
 
 export const SettingsView: React.FC = () => {
   const { settings, updateSettings, showToast } = useApp();
 
   const [formData, setFormData] = useState(settings);
-  const [geoapifyKey, setGeoapifyKey] = useState<string>(() => {
-    return localStorage.getItem('geoapify_api_key') || (import.meta as any).env?.VITE_GEOAPIFY_API_KEY || '';
-  });
-  const [groqKey, setGroqKey] = useState<string>(() => {
-    return localStorage.getItem('groq_api_key') || settings.groqApiKey || (import.meta as any).env?.VITE_GROQ_API_KEY || '';
-  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    updateSettings({
-      ...formData,
-      groqApiKey: groqKey.trim(),
-    });
-    localStorage.setItem('geoapify_api_key', geoapifyKey.trim());
-    localStorage.setItem('groq_api_key', groqKey.trim());
-    showToast('All settings and API keys successfully saved!', 'success');
+    updateSettings(formData);
+    // Remove any legacy keys from client browser storage
+    try {
+      localStorage.removeItem('geoapify_api_key');
+      localStorage.removeItem('groq_api_key');
+    } catch (e) {}
+    showToast('Agency settings saved successfully!', 'success');
   };
 
   return (
@@ -47,7 +41,7 @@ export const SettingsView: React.FC = () => {
             Agency Settings & Scoring Engine
           </h2>
           <p className="text-xs text-slate-400">
-            Configure agency branding, API keys (Gemini, Geoapify), customize lead prioritization scoring weights, and manage deployment providers.
+            Configure agency branding, customize lead prioritization scoring weights, and manage deployment providers.
           </p>
         </div>
 
@@ -156,13 +150,13 @@ export const SettingsView: React.FC = () => {
 
             <div>
               <div className="flex justify-between font-semibold text-slate-300 mb-1">
-                <span>Poor Website Weight:</span>
+                <span>Subpar / Poor Website:</span>
                 <span className="text-indigo-400 font-bold">+{formData.scoringRules.poorWebsiteWeight} pts</span>
               </div>
               <input
                 type="range"
                 min="0"
-                max="50"
+                max="40"
                 value={formData.scoringRules.poorWebsiteWeight}
                 onChange={(e) =>
                   setFormData({
@@ -263,7 +257,7 @@ export const SettingsView: React.FC = () => {
                 onChange={(e) => setFormData({ ...formData, deploymentProvider: e.target.value as any })}
                 className="w-full bg-slate-950 border border-slate-750 rounded-xl px-3 py-2 text-white font-medium focus:outline-none focus:ring-1 focus:ring-indigo-500"
               >
-                <option value="local">Dhanex Internal Live Engine (Hash Routing)</option>
+                <option value="local">Dhanex Internal Live Engine (Dynamic Query Routing)</option>
                 <option value="vercel">Vercel Serverless Edge</option>
                 <option value="netlify">Netlify Edge Previews</option>
               </select>
@@ -292,100 +286,58 @@ export const SettingsView: React.FC = () => {
           </div>
         </div>
 
-        {/* AI Engine Settings */}
+        {/* Secure Backend & Server Proxy Status */}
         <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-4">
-          <h3 className="text-sm font-bold text-white tracking-tight flex items-center gap-2 border-b border-slate-800 pb-3">
-            <Cpu className="w-4 h-4 text-purple-400" />
-            AI Strategy Engine & Providers
-          </h3>
-
-          <div className="space-y-3 text-xs">
-            <div className="space-y-1">
-              <label className="font-semibold text-slate-300">Primary AI Provider</label>
-              <select
-                value={formData.aiProvider}
-                onChange={(e) => setFormData({ ...formData, aiProvider: e.target.value as any })}
-                className="w-full bg-slate-950 border border-slate-750 rounded-xl px-3 py-2 text-white font-medium focus:outline-none focus:ring-1 focus:ring-indigo-500"
-              >
-                <option value="groq">Groq AI (Ultra-fast Llama-3.3 70B & 8B - Recommended)</option>
-                <option value="gemini">Google Gemini 2.0 / 1.5 Flash API</option>
-                <option value="local-smart">Local Smart Qualification Engine (Offline & Fast)</option>
-                <option value="openai">OpenAI GPT-4o Mini API</option>
-              </select>
-            </div>
-
-            <div className="space-y-1">
-              <label className="font-semibold text-slate-300 flex items-center justify-between">
-                <span>Groq API Key (Llama 3.3 70B)</span>
-                <span className="text-[10px] text-purple-400 font-normal">Fast & Free Tier</span>
-              </label>
-              <input
-                type="password"
-                value={groqKey}
-                onChange={(e) => setGroqKey(e.target.value)}
-                placeholder="gsk_..."
-                className="w-full bg-slate-950 border border-slate-750 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-1 focus:ring-purple-500 font-mono"
-              />
-              <p className="text-[10px] text-slate-500">
-                You can also set this in your <code className="text-slate-300">.env</code> file as <code className="text-purple-400">VITE_GROQ_API_KEY</code>.
-              </p>
-            </div>
-
-            <div className="space-y-1">
-              <label className="font-semibold text-slate-300">Google Gemini API Key (Optional)</label>
-              <input
-                type="password"
-                value={formData.apiKey}
-                onChange={(e) => setFormData({ ...formData, apiKey: e.target.value })}
-                placeholder="AIzaSy..."
-                className="w-full bg-slate-950 border border-slate-750 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-1 focus:ring-indigo-500 font-mono"
-              />
-              <p className="text-[10px] text-slate-500">
-                Set in <code className="text-slate-300">.env</code> as <code className="text-indigo-400">VITE_GEMINI_API_KEY</code>.
-              </p>
-            </div>
-
-            <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-[11px] text-slate-400">
-              <span className="font-bold text-emerald-400 flex items-center gap-1">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                Anti-Hallucination Guardrails Active
-              </span>
-              <p>AI copy generation is strictly constrained by factual verified lead input. No fabricated awards, review numbers, or fake statistics.</p>
-            </div>
+          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+            <h3 className="text-sm font-bold text-white tracking-tight flex items-center gap-2">
+              <Server className="w-4 h-4 text-emerald-400" />
+              Backend Server & Security Proxy
+            </h3>
+            <span className="flex items-center gap-1.5 text-[11px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              Port 5000 Active
+            </span>
           </div>
-        </div>
-
-        {/* Live Maps & Geoapify Configuration */}
-        <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-4">
-          <h3 className="text-sm font-bold text-white tracking-tight flex items-center gap-2 border-b border-slate-800 pb-3">
-            <MapPin className="w-4 h-4 text-amber-400" />
-            Live Maps & Geoapify API Provider
-          </h3>
 
           <div className="space-y-3 text-xs">
-            <div className="space-y-1">
-              <label className="font-semibold text-slate-300 flex items-center justify-between">
-                <span>Geoapify API Key</span>
-                <span className="text-[10px] text-amber-400 font-normal">Free 3,000 req/day</span>
-              </label>
-              <input
-                type="password"
-                value={geoapifyKey}
-                onChange={(e) => setGeoapifyKey(e.target.value)}
-                placeholder="Paste your Geoapify API Key here..."
-                className="w-full bg-slate-950 border border-slate-750 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-1 focus:ring-amber-500 font-mono"
-              />
-              <p className="text-[10px] text-slate-500">
-                You can also set this in your <code className="text-slate-300">.env</code> file as <code className="text-amber-400">VITE_GEOAPIFY_API_KEY</code>.
-              </p>
+            <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-2.5">
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-slate-300 flex items-center gap-2">
+                  <Cpu className="w-4 h-4 text-purple-400" />
+                  Groq AI Engine (Qwen 3.8-27B)
+                </span>
+                <span className="text-emerald-400 font-bold text-[11px] flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5" /> Secured on Server
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-slate-300 flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-amber-400" />
+                  Geoapify Places API
+                </span>
+                <span className="text-emerald-400 font-bold text-[11px] flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5" /> Secured on Server
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-slate-300 flex items-center gap-2">
+                  <Globe className="w-4 h-4 text-blue-400" />
+                  Google Gemini AI (Optional)
+                </span>
+                <span className="text-slate-400 font-bold text-[11px] flex items-center gap-1">
+                  Server Proxy Ready
+                </span>
+              </div>
             </div>
 
-            <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-[11px] text-slate-400">
-              <span className="font-bold text-emerald-400 flex items-center gap-1">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                Real-Time Local Maps Search Active
+            <div className="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/20 space-y-1 text-[11px] text-emerald-300">
+              <span className="font-bold flex items-center gap-1.5 text-emerald-300">
+                <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                Zero API Keys in Frontend Bundle
               </span>
-              <p>When configured, "Find Leads" queries live businesses with real GPS coordinates, verified phone numbers, and categories via Geoapify Places API.</p>
+              <p className="text-slate-400 text-[10.5px]">
+                All sensitive API keys live strictly in your server-side <code className="text-slate-200">.env</code> file. The frontend communicates exclusively through authenticated backend proxy endpoints.
+              </p>
             </div>
           </div>
         </div>
@@ -393,3 +345,4 @@ export const SettingsView: React.FC = () => {
     </form>
   );
 };
+

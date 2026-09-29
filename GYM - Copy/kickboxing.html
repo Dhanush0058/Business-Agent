@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CKO Kickboxing - Signature Kickboxing Program</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body class="antialiased text-white bg-black">
+    <!-- Navigation -->
+    <nav class="sticky w-full top-0 z-50 bg-black/95 backdrop-blur-md border-b border-white/10 shadow-2xl nav-premium">
+      <div class="flex h-20 max-w-[1600px] mx-auto px-6 relative items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3 group z-50 shrink-0">
+          <img src="https://i.ibb.co/rRwkwHR2/cko-logo-2.png" alt="CKO Kickboxing Logo" class="w-auto h-10 object-contain">
+        </a>
+        <div class="hidden lg:flex items-center gap-12 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <a href="index.html" class="uppercase hover:text-accent transition-colors text-sm font-semibold text-white tracking-[0.1em] font-heading nav-link">Home</a>
+          <a href="about-page.html" class="uppercase hover:text-accent transition-colors text-sm font-semibold text-white tracking-[0.1em] font-heading nav-link">About</a>
+          <a href="kickboxing.html" class="uppercase text-accent transition-colors text-sm font-semibold tracking-[0.1em] font-heading nav-link">Kickboxing</a>
+          <a href="group-fitness.html" class="uppercase hover:text-accent transition-colors text-sm font-semibold text-white tracking-[0.1em] font-heading nav-link">Group Fitness</a>
+        </div>
+        <div class="hidden md:flex items-center shrink-0">
+          <a href="schedule.html" class="bg-accent hover:bg-[#e5b000] text-black font-heading font-semibold uppercase tracking-widest text-xs py-3 px-6 rounded-sm transition-all shadow-md shadow-accent/10 hover:shadow-accent/20">
+            Book Class
+          </a>
+        </div>
+        <button id="mobile-menu-btn" class="lg:hidden p-2 text-white hover:text-accent transition-colors" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="menu" id="menu-icon" class="w-6 h-6"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" id="close-icon" class="lucide lucide-x w-6 h-6 hidden"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+        </button>
+      </div>
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden lg:hidden bg-black text-white absolute w-full top-20 left-0 px-6 pb-8 border-b border-white/10 shadow-2xl">
+        <div class="flex flex-col space-y-6 pt-8 text-2xl font-heading font-semibold uppercase tracking-widest text-center">
+          <a href="index.html" class="block hover:text-accent transition-colors">Home</a>
+          <a href="about-page.html" class="block hover:text-accent transition-colors">About</a>
+          <a href="kickboxing.html" class="block text-accent transition-colors">Kickboxing</a>
+          <a href="group-fitness.html" class="block hover:text-accent transition-colors">Group Fitness</a>
+          <a href="franchise-page.html" class="block hover:text-accent transition-colors">Franchise</a>
+          <a href="schedule.html" class="mt-4 w-full bg-accent text-black font-semibold py-4 uppercase tracking-widest block text-sm"> Book Class </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Program Header -->
+    <section class="relative py-24 md:py-36 bg-black overflow-hidden border-b border-white/5">
+      <div class="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_center,rgba(254,196,0,0.08),transparent_70%)]"></div>
+      <div class="max-w-[1400px] mx-auto px-6 relative z-10 text-center">
+        <span class="text-accent text-xs font-semibold uppercase tracking-[0.3em] mb-4 block">Signature Program</span>
+        <h1 class="font-heading text-5xl md:text-7xl font-bold uppercase tracking-tight text-white mb-6">
+          CKO <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#fec400] to-yellow-200">Kickboxing</span>
+        </h1>
+        <p class="text-gray-400 text-base md:text-xl font-light leading-relaxed max-w-2xl mx-auto">
+          Our main, high-energy class is designed to burn up to 1,200 calories per session. Punch, kick, sweat, and melt stress away on your own heavy bag.
+        </p>
+      </div>
+    </section>
+
+    <!-- Workout Flow Walkthrough -->
+    <section class="py-24 bg-[#050505]">
+      <div class="max-w-[1400px] mx-auto px-6">
+        <div class="text-center mb-16 reveal-on-scroll">
+          <span class="text-accent text-xs font-semibold uppercase tracking-[0.25em] mb-3 block">What To Expect</span>
+          <h2 class="font-heading text-4xl font-bold uppercase text-white tracking-tight">The 45-Minute Workout Flow</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <!-- Step 1 -->
+          <div class="group border border-white/10 bg-[#0d0d0d] p-8 rounded-sm hover:border-accent/40 transition-all duration-300 reveal-on-scroll">
+            <span class="font-heading text-5xl font-bold text-accent/20 group-hover:text-accent/40 transition-colors block mb-4">01</span>
+            <h3 class="font-heading text-xl font-semibold uppercase text-white mb-3">Warm Up</h3>
+            <p class="text-gray-500 text-sm font-light leading-relaxed">
+              10 minutes of dynamic movement, calisthenics, and light stretching to elevate your heart rate and prepare joints for bag work.
+            </p>
+          </div>
+          <!-- Step 2 -->
+          <div class="group border border-white/10 bg-[#0d0d0d] p-8 rounded-sm hover:border-accent/40 transition-all duration-300 reveal-on-scroll delay-100">
+            <span class="font-heading text-5xl font-bold text-accent/20 group-hover:text-accent/40 transition-colors block mb-4">02</span>
+            <h3 class="font-heading text-xl font-semibold uppercase text-white mb-3">Bag Work</h3>
+            <p class="text-gray-500 text-sm font-light leading-relaxed">
+              25 minutes of combinations—jabs, crosses, hooks, kicks, and knees. Work at your own pace and power level under instructor guidance.
+            </p>
+          </div>
+          <!-- Step 3 -->
+          <div class="group border border-white/10 bg-[#0d0d0d] p-8 rounded-sm hover:border-accent/40 transition-all duration-300 reveal-on-scroll delay-200">
+            <span class="font-heading text-5xl font-bold text-accent/20 group-hover:text-accent/40 transition-colors block mb-4">03</span>
+            <h3 class="font-heading text-xl font-semibold uppercase text-white mb-3">Core Blast</h3>
+            <p class="text-gray-500 text-sm font-light leading-relaxed">
+              7 minutes of intensive abdominal work targeting obliques, upper, and lower core using planks, crunches, and conditioning.
+            </p>
+          </div>
+          <!-- Step 4 -->
+          <div class="group border border-white/10 bg-[#0d0d0d] p-8 rounded-sm hover:border-accent/40 transition-all duration-300 reveal-on-scroll delay-300">
+            <span class="font-heading text-5xl font-bold text-accent/20 group-hover:text-accent/40 transition-colors block mb-4">04</span>
+            <h3 class="font-heading text-xl font-semibold uppercase text-white mb-3">Cool Down</h3>
+            <p class="text-gray-500 text-sm font-light leading-relaxed">
+              3 minutes of slow breathing and deep static stretching to aid recovery, reduce muscle tension, and finish class feeling accomplished.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Comparison Block -->
+    <section class="py-24 bg-[#0a0a0a]">
+      <div class="max-w-[1000px] mx-auto px-6">
+        <div class="text-center mb-16 reveal-on-scroll">
+          <span class="text-accent text-xs font-semibold uppercase tracking-[0.25em] mb-3 block">Head-To-Head</span>
+          <h2 class="font-heading text-4xl font-bold uppercase text-white tracking-tight">How CKO Kickboxing Compares</h2>
+        </div>
+
+        <div class="overflow-x-auto border border-white/10 bg-[#0d0d0d] rounded-sm reveal-on-scroll">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-white/10 bg-black/40 font-heading text-sm uppercase tracking-wider text-accent">
+                <th class="p-6">Feature</th>
+                <th class="p-6 border-l border-white/10 text-white">CKO Kickboxing</th>
+                <th class="p-6 border-l border-white/10">Traditional Gyms</th>
+                <th class="p-6 border-l border-white/10">Treadmill Running</th>
+              </tr>
+            </thead>
+            <tbody class="text-sm font-light text-gray-400">
+              <tr class="border-b border-white/5">
+                <td class="p-6 font-semibold text-white">Calorie Burn / Hour</td>
+                <td class="p-6 border-l border-white/10 text-white font-medium bg-accent/5">Up to 1,200 Calories</td>
+                <td class="p-6 border-l border-white/10">~300-400 Calories</td>
+                <td class="p-6 border-l border-white/10">~500-600 Calories</td>
+              </tr>
+              <tr class="border-b border-white/5">
+                <td class="p-6 font-semibold text-white">Full-Body Toning</td>
+                <td class="p-6 border-l border-white/10 text-white font-medium bg-accent/5">Yes (Core, Legs, Upper Body)</td>
+                <td class="p-6 border-l border-white/10">Requires self-guided weights</td>
+                <td class="p-6 border-l border-white/10">Mainly Lower Body</td>
+              </tr>
+              <tr class="border-b border-white/5">
+                <td class="p-6 font-semibold text-white">Stress Relief</td>
+                <td class="p-6 border-l border-white/10 text-white font-medium bg-accent/5">High (Physical contact with bags)</td>
+                <td class="p-6 border-l border-white/10">Moderate</td>
+                <td class="p-6 border-l border-white/10">Low to Moderate</td>
+              </tr>
+              <tr>
+                <td class="p-6 font-semibold text-white">Guided Instruction</td>
+                <td class="p-6 border-l border-white/10 text-white font-medium bg-accent/5">Included in every session</td>
+                <td class="p-6 border-l border-white/10">Expensive Personal Trainer</td>
+                <td class="p-6 border-l border-white/10">None</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-20 bg-accent text-black relative z-10 text-center">
+      <div class="max-w-4xl mx-auto px-6">
+        <h2 class="font-heading text-4xl md:text-5xl font-bold uppercase mb-4">First class is absolutely free!</h2>
+        <p class="text-black/80 text-base md:text-lg font-light mb-8 max-w-2xl mx-auto">
+          No contracts, no pressure. Simply schedule your free class, wrap your hands, and get ready to crush your goals.
+        </p>
+        <a href="schedule.html" class="inline-block bg-black hover:bg-neutral-800 text-white font-heading font-semibold uppercase tracking-widest text-xs py-4 px-10 rounded-sm transition-all hover:scale-105">
+          Find A Slot
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/10">
+      <div class="max-w-[1400px] mx-auto px-6 py-14">
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+          <div>
+            <div class="leading-none text-3xl font-bold italic text-white tracking-tighter font-heading">CKO</div>
+            <div class="text-xs text-accent uppercase leading-none font-semibold tracking-[0.3em] mt-2">Kickboxing</div>
+            <p class="text-gray-500 text-base font-light leading-relaxed mt-6 max-w-sm"> High-energy kickboxing classes for every level. Hit the bags, sweat hard, and leave feeling unstoppable. </p>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-[0.25em] text-gray-400 font-semibold mb-4">Explore</div>
+            <ul class="space-y-3 text-base text-gray-400 font-light">
+              <li><a href="index.html" class="hover:text-accent transition-colors">Home</a></li>
+              <li><a href="schedule.html" class="hover:text-accent transition-colors">Book a Class</a></li>
+              <li><a href="about-page.html" class="hover:text-accent transition-colors">About Us</a></li>
+              <li><a href="franchise-page.html" class="hover:text-accent transition-colors">Own a Franchise</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-[0.25em] text-gray-400 font-semibold mb-4">Contact</div>
+            <ul class="space-y-3 text-base text-gray-400 font-light">
+              <li class="flex items-center gap-3">
+                <span class="text-accent"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="phone" class="lucide lucide-phone w-4 h-4"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path></svg></span>
+                <a href="tel:5551234567" class="hover:text-accent transition-colors">(555) 123-4567</a>
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="text-accent"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="mail" class="lucide lucide-mail w-4 h-4"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg></span>
+                <a href="mailto:hello@ckokickboxing.com" class="hover:text-accent transition-colors">hello@ckokickboxing.com</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-[0.25em] text-gray-400 font-semibold mb-4">Follow</div>
+            <div class="flex items-center gap-3">
+              <a href="#" class="w-10 h-10 rounded-full border border-white/10 bg-white/5 hover:border-accent/50 hover:bg-white/10 transition-all flex items-center justify-center" aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="instagram" class="lucide lucide-instagram w-5 h-5 text-gray-200"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+              </a>
+              <a href="#" class="w-10 h-10 rounded-full border border-white/10 bg-white/5 hover:border-accent/50 hover:bg-white/10 transition-all flex items-center justify-center" aria-label="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="facebook" class="lucide lucide-facebook w-5 h-5 text-gray-200"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p class="text-xs text-gray-500 font-light">© 2026 CKO Kickboxing. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+  </body>
+</html>

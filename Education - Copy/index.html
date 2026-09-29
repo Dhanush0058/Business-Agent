@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIET University | Shaping Innovators & Empowering Futures</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Dynamic Branding & URL Engine -->
+    <script src="dynamic-branding.js" defer></script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        h1, h2, h3, h4, h5, h6, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Custom scrollbar for a premium feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-600 antialiased selection:bg-indigo-900 selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 bg-white/80 backdrop-blur-md border-b border-slate-200/60">
+        <div class="flex h-20 max-w-7xl mx-auto px-6 items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-indigo-950 text-white flex items-center justify-center rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-300">
+                    <span class="font-serif text-xl font-medium tracking-tighter">G</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-serif text-lg font-semibold text-indigo-950 tracking-tight leading-none">GIET</span>
+                    <span class="text-[0.65rem] uppercase tracking-widest text-slate-500 font-medium">University</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center gap-8">
+                <a href="#academics" class="text-sm font-medium text-slate-600 hover:text-indigo-900 transition-colors">Academics</a>
+                <a href="#admissions" class="hover:text-indigo-900 transition-colors text-sm font-medium text-slate-600">Admissions</a>
+                <a href="#research" class="text-sm font-medium text-slate-600 hover:text-indigo-900 transition-colors">Research</a>
+                <a href="#campus-life" class="text-sm font-medium text-slate-600 hover:text-indigo-900 transition-colors">Campus Life</a>
+                <a href="#placements" class="text-sm font-medium text-slate-600 hover:text-indigo-900 transition-colors">Placements</a>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-4">
+                <button class="hidden md:flex text-slate-500 hover:text-indigo-900 transition-colors">
+                    <iconify-icon icon="solar:magnifer-linear" width="22" stroke-width="1.5"></iconify-icon>
+                </button>
+                <a href="#apply" class="bg-indigo-950 text-white text-sm font-medium px-5 py-2.5 rounded-full hover:bg-indigo-900 hover:shadow-lg transition-all duration-300 flex items-center gap-2 group">
+                    Apply Now
+                    <iconify-icon icon="solar:arrow-right-linear" class="group-hover:translate-x-1 transition-transform" stroke-width="1.5"></iconify-icon>
+                </a>
+                <button class="lg:hidden text-slate-800" id="menu-btn">
+                    <iconify-icon icon="solar:hamburger-menu-linear" width="24" stroke-width="1.5"></iconify-icon>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-slate-200 px-6 py-4 space-y-3">
+            <a href="#academics" class="block text-sm font-medium text-slate-600 hover:text-indigo-900 py-1">Academics</a>
+            <a href="#admissions" class="block text-sm font-medium text-slate-600 hover:text-indigo-900 py-1">Admissions</a>
+            <a href="#research" class="block text-sm font-medium text-slate-600 hover:text-indigo-900 py-1">Research</a>
+            <a href="#campus-life" class="block text-sm font-medium text-slate-600 hover:text-indigo-900 py-1">Campus Life</a>
+            <a href="#placements" class="block text-sm font-medium text-slate-600 hover:text-indigo-900 py-1">Placements</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <!-- Background Image with Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1562774053-701939374585?q=80&amp;w=2886&amp;auto=format&amp;fit=crop" alt="Campus Architecture" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-indigo-950/80 mix-blend-multiply"></div>
+            <div class="bg-gradient-to-t from-indigo-950 via-transparent to-transparent absolute inset-0"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-6 text-center w-full mt-12">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-amber-300 text-xs font-medium uppercase tracking-wider mb-6">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                Admissions Open 2024-25
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-medium text-white tracking-tight leading-tight mb-6">
+                Shaping Innovators. <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500 italic font-serif">Empowering Futures.</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl text-slate-200 max-w-2xl mx-auto mb-10 font-light leading-relaxed">
+                A premier institution fostering academic excellence, cutting-edge research, and global leadership skills in the heart of India.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#academics" class="w-full sm:w-auto px-8 py-4 bg-white text-indigo-950 rounded-full font-medium text-sm hover:bg-slate-100 transition-all shadow-xl hover:shadow-2xl hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                    Explore Programs
+                </a>
+                <a href="#" class="w-full sm:w-auto px-8 py-4 bg-transparent border border-white/30 text-white rounded-full font-medium text-sm hover:bg-white/10 backdrop-blur-sm transition-all flex items-center justify-center gap-2 group">
+                    <iconify-icon icon="solar:play-circle-linear" width="20" stroke-width="1.5"></iconify-icon>
+                    Virtual Tour
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 flex flex-col items-center gap-2 animate-bounce">
+            <span class="text-[10px] uppercase tracking-widest">Scroll</span>
+            <iconify-icon icon="solar:mouse-minimalistic-linear" width="20" stroke-width="1.5"></iconify-icon>
+        </div>
+    </header>
+
+    <!-- Key Statistics / Trust Bar -->
+    <section class="bg-white border-b border-slate-100 relative z-20 -mt-8 mx-4 md:mx-auto max-w-6xl rounded-2xl shadow-xl p-8 md:p-12 grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="text-center md:text-left border-r border-slate-100 last:border-0">
+            <h3 class="text-3xl md:text-4xl font-serif font-medium text-indigo-950 mb-1">96%</h3>
+            <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Placement Rate</p>
+        </div>
+        <div class="text-center md:text-left border-r border-slate-100 last:border-0">
+            <h3 class="text-3xl md:text-4xl font-serif font-medium text-indigo-950 mb-1">50+</h3>
+            <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Patents Filed</p>
+        </div>
+        <div class="text-center md:text-left border-r border-slate-100 last:border-0">
+            <h3 class="text-3xl md:text-4xl font-serif font-medium text-indigo-950 mb-1">25Cr</h3>
+            <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Research Grants</p>
+        </div>
+        <div class="text-center md:text-left">
+            <h3 class="text-3xl md:text-4xl font-serif font-medium text-indigo-950 mb-1">100+</h3>
+            <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Corporate Partners</p>
+        </div>
+    </section>
+
+    <!-- Academics Section -->
+    <section id="academics" class="py-24 px-6 bg-slate-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div>
+                    <span class="text-amber-600 text-xs font-bold tracking-widest uppercase mb-2 block">Academics</span>
+                    <h2 class="text-3xl md:text-4xl font-serif font-medium text-slate-900 tracking-tight">Schools of Excellence</h2>
+                    <p class="mt-4 text-slate-500 max-w-md font-light">Interdisciplinary learning tailored to empower the next generation of leaders across various domains.</p>
+                </div>
+                <a href="#" class="text-indigo-900 text-sm font-medium hover:text-amber-600 transition-colors flex items-center gap-1 group">
+                    View all programs 
+                    <iconify-icon icon="solar:arrow-right-linear" class="group-hover:translate-x-1 transition-transform" stroke-width="1.5"></iconify-icon>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <a href="#" class="group bg-white p-8 rounded-xl border border-slate-200 hover:border-indigo-100 hover:shadow-xl hover:shadow-indigo-900/5 transition-all duration-300 relative overflow-hidden">
+                    <div class="w-12 h-12 bg-indigo-50 text-indigo-900 rounded-lg flex items-center justify-center mb-6 group-hover:bg-indigo-900 group-hover:text-white transition-colors">
+                        <iconify-icon icon="solar:monitor-smartphone-linear" width="24" stroke-width="1.5"></iconify-icon>
+                    </div>
+                    <h3 class="text-xl font-serif font-medium text-slate-900 mb-3 group-hover:text-indigo-900 transition-colors">Engineering &amp; Technology</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-6">Computer Science, AI &amp; ML, Civil, Mechanical, and Electronics Engineering.</p>
+                    <span class="inline-flex items-center text-xs font-medium text-indigo-900 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+                        View Syllabus <iconify-icon icon="solar:arrow-right-linear" class="ml-1"></iconify-icon>
+                    </span>
+                </a>
+
+                <!-- Card 2 -->
+                <a href="#" class="group bg-white p-8 rounded-xl border border-slate-200 hover:border-indigo-100 hover:shadow-xl hover:shadow-indigo-900/5 transition-all duration-300 relative overflow-hidden">
+                    <div class="w-12 h-12 bg-indigo-50 text-indigo-900 rounded-lg flex items-center justify-center mb-6 group-hover:bg-indigo-900 group-hover:text-white transition-colors">
+                        <iconify-icon icon="solar:graph-up-linear" width="24" stroke-width="1.5"></iconify-icon>
+                    </div>
+                    <h3 class="text-xl font-serif font-medium text-slate-900 mb-3 group-hover:text-indigo-900 transition-colors">Management Studies</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-6">MBA, BBA, and specialized programs in Finance, Marketing, and HR.</p>
+                    <span class="inline-flex items-center text-xs font-medium text-indigo-900 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+                        View Syllabus <iconify-icon icon="solar:arrow-right-linear" class="ml-1"></iconify-icon>
+                    </span>
+                </a>
+
+                <!-- Card 3 -->
+                <a href="#" class="group bg-white p-8 rounded-xl border border-slate-200 hover:border-indigo-100 hover:shadow-xl hover:shadow-indigo-900/5 transition-all duration-300 relative overflow-hidden">
+                    <div class="w-12 h-12 bg-indigo-50 text-indigo-900 rounded-lg flex items-center justify-center mb-6 group-hover:bg-indigo-900 group-hover:text-white transition-colors">
+                        <iconify-icon icon="solar:test-tube-minimalistic-linear" width="24" stroke-width="1.5"></iconify-icon>
+                    </div>
+                    <h3 class="text-xl font-serif font-medium text-slate-900 mb-3 group-hover:text-indigo-900 transition-colors">Agriculture &amp; Sciences</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-6">Advanced agricultural practices, biotechnology, and pure sciences.</p>
+                    <span class="inline-flex items-center text-xs font-medium text-indigo-900 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+                        View Syllabus <iconify-icon icon="solar:arrow-right-linear" class="ml-1"></iconify-icon>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research & Innovation Highlight (Dark Mode) -->
+    <section id="research" class="py-24 bg-indigo-950 text-white relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-indigo-900/50 to-transparent"></div>
+        <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl"></div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="h-px w-8 bg-amber-500"></span>
+                        <span class="text-amber-500 text-xs font-bold tracking-widest uppercase">Research &amp; Innovation</span>
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-serif font-medium tracking-tight mb-6 leading-tight">
+                        Pioneering the future through <span class="italic text-slate-300">discovery.</span>
+                    </h2>
+                    <p class="text-indigo-200 text-lg font-light mb-8 max-w-lg">
+                        Our 15+ advanced research centers are tackling global challenges, from renewable energy to AI ethics. Join a community where curiosity meets impact.
+                    </p>
+                    
+                    <ul class="space-y-4 mb-10">
+                        <li class="flex items-start gap-3">
+                            <iconify-icon icon="solar:check-circle-linear" class="text-amber-500 mt-1" width="20"></iconify-icon>
+                            <span class="text-sm text-slate-200">State-of-the-art Incubation Center for Startups</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <iconify-icon icon="solar:check-circle-linear" class="text-amber-500 mt-1" width="20"></iconify-icon>
+                            <span class="text-sm text-slate-200">Collaborative projects with DRDO &amp; ISRO</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <iconify-icon icon="solar:check-circle-linear" class="text-amber-500 mt-1" width="20"></iconify-icon>
+                            <span class="text-sm text-slate-200">Dedicated PhD fellowships for meritorious scholars</span>
+                        </li>
+                    </ul>
+
+                    <a href="#" class="inline-flex items-center gap-2 text-white border-b border-amber-500 pb-1 hover:text-amber-400 transition-colors">
+                        Explore Research Ecosystem
+                        <iconify-icon icon="solar:arrow-right-linear" stroke-width="1.5"></iconify-icon>
+                    </a>
+                </div>
+
+                <div class="relative group">
+                    <div class="absolute -inset-2 bg-gradient-to-r from-amber-500 to-indigo-600 rounded-2xl opacity-20 blur-lg group-hover:opacity-40 transition duration-500"></div>
+                    <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&amp;w=2940&amp;auto=format&amp;fit=crop" alt="Lab Research" class="relative rounded-2xl shadow-2xl w-full object-cover h-[500px] grayscale group-hover:grayscale-0 transition duration-700">
+                    
+                    <div class="absolute bottom-6 left-6 right-6 bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/10">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs text-amber-300 uppercase tracking-widest mb-1">Latest Breakthrough</p>
+                                <p class="text-white font-medium">Sustainable Energy Storage Solutions</p>
+                            </div>
+                            <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-indigo-950">
+                                <iconify-icon icon="solar:arrow-right-up-linear" width="20"></iconify-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Placements & Connect -->
+    <section id="placements" class="py-24 px-6 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-indigo-600 text-xs font-bold tracking-widest uppercase mb-2 block">Career Outcomes</span>
+                <h2 class="text-3xl md:text-4xl font-serif font-medium text-slate-900 tracking-tight">From Campus to Corporate</h2>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8 mb-16">
+                <!-- Highlight Box -->
+                <div class="col-span-1 bg-slate-50 border border-slate-100 p-8 rounded-2xl flex flex-col justify-center text-center">
+                    <div class="inline-block mx-auto mb-4 p-3 bg-amber-100 rounded-full text-amber-600">
+                        <iconify-icon icon="solar:crown-star-linear" width="32" stroke-width="1.5"></iconify-icon>
+                    </div>
+                    <h3 class="text-5xl font-serif font-medium text-slate-900 mb-2">₹42 LPA</h3>
+                    <p class="text-sm font-medium text-slate-500 uppercase tracking-wide">Highest Package Offered</p>
+                </div>
+
+                <!-- Recruiters Grid -->
+                <div class="col-span-1 lg:col-span-2 grid grid-cols-2 md:grid-cols-4 gap-4">
+                     <!-- Recruiter Logos -->
+                     <div class="flex items-center justify-center p-6 border border-slate-100 rounded-xl hover:shadow-md transition bg-white grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
+                        <span class="font-sans font-bold text-lg tracking-tight text-blue-600">Google</span>
+                     </div>
+                     <div class="flex items-center justify-center p-6 border border-slate-100 rounded-xl hover:shadow-md transition bg-white grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
+                        <span class="font-serif font-bold text-lg tracking-tight text-slate-900">Amazon</span>
+                     </div>
+                     <div class="flex items-center justify-center p-6 border border-slate-100 rounded-xl hover:shadow-md transition bg-white grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
+                        <span class="font-sans font-bold text-lg tracking-tight text-blue-800">TCS</span>
+                     </div>
+                     <div class="flex items-center justify-center p-6 border border-slate-100 rounded-xl hover:shadow-md transition bg-white grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
+                        <span class="font-sans font-bold text-lg tracking-tight text-indigo-600">Infosys</span>
+                     </div>
+                     <div class="flex items-center justify-center p-6 border border-slate-100 rounded-xl hover:shadow-md transition bg-white grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
+                        <span class="font-sans font-bold text-lg tracking-tight text-orange-600">Wipro</span>
+                     </div>
+                     <div class="flex items-center justify-center p-6 border border-slate-100 rounded-xl hover:shadow-md transition bg-white grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
+                        <span class="font-sans font-bold text-lg tracking-tight text-blue-500">Capgemini</span>
+                     </div>
+                     <div class="flex items-center justify-center p-6 border border-slate-100 rounded-xl hover:shadow-md transition bg-white grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
+                        <span class="font-sans font-bold text-lg tracking-tight text-red-600">Accenture</span>
+                     </div>
+                     <div class="flex items-center justify-center p-6 border border-slate-100 rounded-xl hover:shadow-md transition bg-white grayscale hover:grayscale-0 opacity-70 hover:opacity-100">
+                        <span class="font-sans font-bold text-lg tracking-tight text-emerald-600">Deloitte</span>
+                     </div>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <a href="#" class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 border border-slate-200 px-6 py-3 rounded-full hover:bg-slate-50 transition">
+                    View Placement Report 2024
+                    <iconify-icon icon="solar:file-download-linear" width="18"></iconify-icon>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campus Life Gallery -->
+    <section id="campus-life" class="py-24 px-6 bg-slate-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex justify-between items-center mb-10">
+                <h2 class="text-3xl font-serif font-medium text-slate-900 tracking-tight">Life at GIET</h2>
+                <div class="flex gap-2">
+                    <button class="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center hover:bg-white hover:shadow-md transition text-slate-600" id="gallery-prev">
+                        <iconify-icon icon="solar:arrow-left-linear" width="20"></iconify-icon>
+                    </button>
+                    <button class="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center hover:bg-white hover:shadow-md transition text-slate-600" id="gallery-next">
+                        <iconify-icon icon="solar:arrow-right-linear" width="20"></iconify-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-4 h-[600px]">
+                <div class="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-2xl">
+                    <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&amp;w=2940&amp;auto=format&amp;fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Student Event">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80"></div>
+                    <div class="absolute bottom-6 left-6 text-white">
+                        <h3 class="text-xl font-medium mb-1">Annual Cultural Fest</h3>
+                        <p class="text-sm text-white/80">Celebrating diversity and talent.</p>
+                    </div>
+                </div>
+                <div class="md:col-span-1 md:row-span-1 relative group overflow-hidden rounded-2xl">
+                    <img src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?q=80&amp;w=2874&amp;auto=format&amp;fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Library">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition"></div>
+                    <div class="absolute bottom-4 left-4 text-white translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-300">
+                        <p class="text-sm font-medium">Central Library</p>
+                    </div>
+                </div>
+                <div class="md:col-span-1 md:row-span-1 relative group overflow-hidden rounded-2xl">
+                    <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/917d6f93-fb36-439a-8c48-884b67b35381_1600w.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Sports">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition"></div>
+                    <div class="absolute bottom-4 left-4 text-white translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-300">
+                        <p class="text-sm font-medium">Sports Complex</p>
+                    </div>
+                </div>
+                <div class="md:col-span-2 md:row-span-1 relative group overflow-hidden rounded-2xl">
+                    <img src="https://images.unsplash.com/photo-1564981797816-1043664bf78d?q=80&amp;w=2874&amp;auto=format&amp;fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Tech Lab">
+                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80"></div>
+                    <div class="absolute bottom-6 left-6 text-white">
+                        <h3 class="text-lg font-medium mb-1">Innovation Hub</h3>
+                        <p class="text-sm text-white/80">Where ideas turn into reality.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News & Happenings -->
+    <section class="py-24 px-6 bg-white">
+        <div class="max-w-7xl mx-auto">
+             <div class="flex justify-between items-end mb-12 border-b border-slate-100 pb-4">
+                <h2 class="text-3xl font-serif font-medium text-slate-900 tracking-tight">University Happenings</h2>
+                <a href="#" class="text-indigo-600 text-sm font-medium hover:text-indigo-800">View Archive</a>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- News Item 1 -->
+                <article class="group cursor-pointer">
+                    <div class="aspect-[4/3] rounded-xl overflow-hidden mb-4">
+                        <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&amp;w=2940&amp;auto=format&amp;fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Convocation">
+                    </div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-[10px] uppercase font-bold tracking-widest text-indigo-600">Events</span>
+                        <span class="text-xs text-slate-400">Oct 24, 2023</span>
+                    </div>
+                    <h3 class="text-lg font-medium text-slate-900 group-hover:text-indigo-800 transition-colors leading-snug mb-2">
+                        25th Convocation Ceremony: Celebrating Academic Excellence
+                    </h3>
+                    <p class="text-sm text-slate-500 line-clamp-2">The university celebrated the graduation of 1,200 students with Chief Guest Dr. K. Sivan.</p>
+                </article>
+
+                <!-- News Item 2 -->
+                <article class="group cursor-pointer">
+                    <div class="aspect-[4/3] rounded-xl overflow-hidden mb-4">
+                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&amp;w=2940&amp;auto=format&amp;fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Workshop">
+                    </div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-[10px] uppercase font-bold tracking-widest text-emerald-600">Academic</span>
+                        <span class="text-xs text-slate-400">Oct 18, 2023</span>
+                    </div>
+                    <h3 class="text-lg font-medium text-slate-900 group-hover:text-indigo-800 transition-colors leading-snug mb-2">
+                        International Conference on Sustainable Development
+                    </h3>
+                    <p class="text-sm text-slate-500 line-clamp-2">Delegates from 15 countries gathered to discuss future sustainability goals.</p>
+                </article>
+
+                <!-- Notice Board Style -->
+                <div class="bg-slate-50 border border-slate-100 rounded-xl p-6">
+                    <h3 class="font-serif text-xl text-indigo-950 mb-6 flex items-center gap-2">
+                        <iconify-icon icon="solar:bell-bing-linear" class="text-amber-500"></iconify-icon>
+                        Latest Notices
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="pb-4 border-b border-slate-200 last:border-0">
+                            <a href="#" class="block group">
+                                <span class="text-[10px] text-slate-400 font-medium">Nov 01</span>
+                                <p class="text-sm text-slate-700 font-medium group-hover:text-indigo-600 transition">Exam Schedule for Fall Semester Released</p>
+                            </a>
+                        </li>
+                        <li class="pb-4 border-b border-slate-200 last:border-0">
+                            <a href="#" class="block group">
+                                <span class="text-[10px] text-slate-400 font-medium">Oct 28</span>
+                                <p class="text-sm text-slate-700 font-medium group-hover:text-indigo-600 transition">Admissions Open for PhD Program 2024</p>
+                            </a>
+                        </li>
+                        <li class="pb-4 last:border-0">
+                            <a href="#" class="block group">
+                                <span class="text-[10px] text-slate-400 font-medium">Oct 25</span>
+                                <p class="text-sm text-slate-700 font-medium group-hover:text-indigo-600 transition">Winter Internship Drive: Registration</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-indigo-950 text-slate-300 pt-20 pb-10 border-t border-indigo-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 mb-16">
+                <!-- Brand -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-8 h-8 bg-white text-indigo-950 flex items-center justify-center rounded shadow-lg">
+                            <span class="font-serif text-lg font-bold">G</span>
+                        </div>
+                        <span class="font-serif text-xl text-white tracking-tight">GIET University</span>
+                    </div>
+                    <p class="text-sm leading-relaxed text-indigo-200/80 mb-6 pr-8">
+                        Gunupur, Odisha, India - 765022.<br>
+                        Empowering students with knowledge, skill, and values to serve the nation and the globe.
+                    </p>
+                    <div class="flex gap-x-4 gap-y-4">
+                        <a href="#" class="w-8 h-8 rounded-full bg-indigo-900 flex items-center justify-center text-white hover:bg-amber-500 transition-colors">
+                            <iconify-icon icon="solar:facebook-linear" width="16"></iconify-icon>
+                        </a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-indigo-900 flex items-center justify-center text-white hover:bg-amber-500 transition-colors">
+                            <iconify-icon icon="solar:twitter-linear" width="16"></iconify-icon>
+                        </a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-indigo-900 flex items-center justify-center text-white hover:bg-amber-500 transition-colors">
+                            <iconify-icon icon="solar:instagram-linear" width="16"></iconify-icon>
+                        </a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-indigo-900 flex items-center justify-center text-white hover:bg-amber-500 transition-colors">
+                            <iconify-icon icon="solar:linkedin-linear" width="16"></iconify-icon>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Links -->
+                <div>
+                    <h4 class="text-white font-medium mb-6 text-sm uppercase tracking-wider">Academics</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-amber-400 transition-colors">Programs</a></li>
+                        <li><a href="#" class="hover:text-amber-400 transition-colors">Departments</a></li>
+                        <li><a href="#" class="hover:text-amber-400 transition-colors">Academic Calendar</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-medium mb-6 text-sm uppercase tracking-wider">Admissions</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-amber-400 transition-colors">How to Apply</a></li>
+                        <li><a href="#" class="hover:text-amber-400 transition-colors">Scholarships</a></li>
+                        <li><a href="#" class="hover:text-amber-400 transition-colors">Tuition Fees</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="lg:col-span-2">
+                    <h4 class="text-white font-medium mb-6 text-sm uppercase tracking-wider">Stay Connected</h4>
+                    <p class="text-xs text-indigo-200 mb-4">Subscribe to our newsletter for the latest updates.</p>
+                    <form class="flex gap-2">
+                        <input type="email" placeholder="Email address" class="bg-indigo-900/50 border border-indigo-800 rounded-lg px-4 py-2 text-sm text-white w-full focus:outline-none focus:border-amber-500 transition-colors placeholder-indigo-400">
+                        <button class="bg-amber-500 text-indigo-950 px-4 py-2 rounded-lg text-sm font-medium hover:bg-amber-400 transition-colors">
+                            Subscribe
+                        </button>
+                    </form>
+                    <div class="mt-8 flex gap-4 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                        <!-- Accreditation Placeholders -->
+                        <div class="h-8 border border-white/30 rounded px-2 flex items-center text-xs font-bold text-white">NAAC 'A+'</div>
+                        <div class="h-8 border border-white/30 rounded px-2 flex items-center text-xs font-bold text-white">NBA</div>
+                        <div class="h-8 border border-white/30 rounded px-2 flex items-center text-xs font-bold text-white">UGC</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-indigo-900 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-indigo-300">
+                <p>© 2024 GIET University. All rights reserved.</p>
+                <div class="flex gap-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white">Privacy Policy</a>
+                    <a href="#" class="hover:text-white">Terms of Use</a>
+                    <a href="#" class="hover:text-white">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Sticky Navbar Effect on Scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-md');
+                nav.classList.remove('bg-white/80');
+                nav.classList.add('bg-white');
+            } else {
+                nav.classList.remove('shadow-md');
+                nav.classList.add('bg-white/80');
+                nav.classList.remove('bg-white');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+/* Custom CSS for Sangria Raipur */
+
+/* Custom smooth scroll and scrollbar */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem; /* Matches navigation bar height */
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+    background: #262626;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #f59e0b;
+}
+
+/* Custom premium color configurations & extensions */
+:root {
+    --color-amber-glow: rgba(245, 158, 11, 0.15);
+    --color-amber-border: rgba(245, 158, 11, 0.2);
+}
+
+/* Micro-animations */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
+        border-color: rgba(245, 158, 11, 0.1);
+    }
+    50% {
+        box-shadow: 0 0 35px rgba(245, 158, 11, 0.35);
+        border-color: rgba(245, 158, 11, 0.3);
+    }
+}
+
+@keyframes text-reveal {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+    animation: pulse-glow 4s infinite ease-in-out;
+}
+
+/* Glassmorphism elements */
+.glass-panel {
+    background: rgba(23, 23, 23, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-panel-amber {
+    background: rgba(17, 17, 17, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--color-amber-border);
+}
+
+.glass-nav {
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Tab content transitions */
+.menu-category {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.menu-category.hidden {
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+/* Hover effects */
+.hover-gold-glow {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-gold-glow:hover {
+    border-color: rgba(245, 158, 11, 0.4);
+    box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Custom styling for heading text gradients */
+.text-gradient-gold {
+    background: linear-gradient(135deg, #f59e0b 0%, #3b82f6 50%, #f59e0b 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: text-reveal 8s linear infinite;
+}
+
+/* Responsive Image Fixes and Aspect Ratios */
+.img-zoom {
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.img-zoom:hover {
+    transform: scale(1.05);
+}

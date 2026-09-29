@@ -9,6 +9,21 @@ export async function runLiveGroqAnalysis(
   lead: Lead,
   apiKey?: string
 ): Promise<AIQualification | null> {
+  // 1. Prioritize Secure Backend Proxy (Keeps API keys 100% hidden on server)
+  try {
+    const backendRes = await fetch('/api/ai/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ lead, apiKey }),
+    });
+    if (backendRes.ok) {
+      const json = await backendRes.json();
+      if (json?.data) return json.data;
+    }
+  } catch (backendErr) {
+    // Fallback if backend server is not running
+  }
+
   const effectiveKey = (
     apiKey ||
     (import.meta as any).env?.VITE_GROQ_API_KEY ||
@@ -109,6 +124,21 @@ export async function runLiveGroqOutreach(
   demoUrl: string,
   apiKey?: string
 ): Promise<OutreachMessage | null> {
+  // 1. Prioritize Secure Backend Proxy
+  try {
+    const backendRes = await fetch('/api/ai/outreach', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ lead, tone, demoUrl, apiKey, settings }),
+    });
+    if (backendRes.ok) {
+      const json = await backendRes.json();
+      if (json?.message) return json.message;
+    }
+  } catch (backendErr) {
+    // Fallback if backend server is offline
+  }
+
   const effectiveKey = (
     apiKey ||
     settings.groqApiKey ||
@@ -129,7 +159,7 @@ Business Info:
 - Current Website Status: ${lead.websiteStatus}
 - Concept Demo URL: ${demoUrl}
 - Requested Tone: ${tone}
-- Sender: Dhanush from Dhanex Studio (${settings.portfolioUrl || 'dhanexstudio.com'})
+- Sender: Dhanush from Dhanex Studio (${settings.portfolioUrl || 'https://business-portfolio-bice.vercel.app/'})
 
 Strict Compliance Guidelines:
 1. Clearly disclose that the link is an independent "Website Concept" created by Dhanex Studio.

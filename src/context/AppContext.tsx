@@ -62,8 +62,8 @@ interface AppContextType {
 const DEFAULT_SETTINGS: AgencySettings = {
   agencyName: 'Dhanex Studio',
   agencyTagline: 'Bespoke High-Converting Websites & Digital Fronts',
-  portfolioUrl: 'https://dhanexstudio.com',
-  whatsappNumber: '+91 98765 43210',
+  portfolioUrl: 'https://business-portfolio-bice.vercel.app/',
+  whatsappNumber: '+91 93472 49697',
   email: 'dhanush@dhanexstudio.com',
   instagramHandle: '@dhanexstudio',
   defaultTone: 'friendly',
@@ -101,7 +101,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     try {
       const saved = localStorage.getItem('dhanex_settings_live');
       if (saved) {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        // Automatically migrate legacy placeholders to user's real portfolio and number
+        if (parsed.portfolioUrl === 'https://dhanexstudio.com' || !parsed.portfolioUrl) {
+          parsed.portfolioUrl = 'https://business-portfolio-bice.vercel.app/';
+        }
+        if (parsed.whatsappNumber === '+91 98765 43210' || !parsed.whatsappNumber) {
+          parsed.whatsappNumber = '+91 93472 49697';
+        }
+        return { ...DEFAULT_SETTINGS, ...parsed };
       }
     } catch (e) {
       console.error(e);

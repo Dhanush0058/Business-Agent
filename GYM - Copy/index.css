@@ -1,0 +1,199 @@
+/* Custom styles for CKO Kickboxing */
+
+/* Custom properties */
+:root {
+  --color-accent: #fec400;
+  --color-accent-hover: #e5b000;
+  --color-dark-bg: #050505;
+  --color-dark-surface: #0f0f0f;
+  --color-dark-border: rgba(255, 255, 255, 0.08);
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+  background-color: var(--color-dark-bg);
+  color: #ffffff;
+}
+
+h1,
+h2,
+h3,
+h4,
+.font-heading {
+  font-family: "Oswald", sans-serif;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0f0f0f;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-hover);
+}
+
+/* Custom utility classes */
+.text-accent {
+  color: var(--color-accent);
+}
+.bg-accent {
+  background-color: var(--color-accent);
+}
+.border-accent {
+  border-color: var(--color-accent);
+}
+
+/* Scroll Animations */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .mobile-scale-in {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+  .mobile-scale-in.is-visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-300 { transition-delay: 300ms; }
+.delay-400 { transition-delay: 400ms; }
+
+/* Autofill fixes */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #111 inset !important;
+  -webkit-text-fill-color: white !important;
+  caret-color: white !important;
+}
+
+/* Custom header animations */
+@keyframes navGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(254, 196, 0, 0.05), 0 0 40px rgba(254, 196, 0, 0.02);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(254, 196, 0, 0.15), 0 0 60px rgba(254, 196, 0, 0.05);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes pulse-border {
+  0%, 100% {
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+  50% {
+    border-color: rgba(254, 196, 0, 0.25);
+  }
+}
+
+.nav-premium {
+  animation: navGlow 4s ease-in-out infinite, pulse-border 3s ease-in-out infinite;
+}
+
+.nav-premium::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(254, 196, 0, 0.4), transparent);
+  animation: shimmer 3s linear infinite;
+  background-size: 200% auto;
+}
+
+.nav-premium::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(254, 196, 0, 0.2), transparent);
+  animation: shimmer 4s linear infinite reverse;
+  background-size: 200% auto;
+}
+
+.nav-link {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #fec400, #fef08a);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-link:hover {
+  text-shadow: 0 0 20px rgba(254, 196, 0, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Glassmorphism & Cards */
+.glass-panel {
+  background: rgba(15, 15, 15, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-accent {
+  background: rgba(254, 196, 0, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(254, 196, 0, 0.15);
+}
+
+.card-premium {
+  background-color: var(--color-dark-surface);
+  border: 1px solid var(--color-dark-border);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card-premium:hover {
+  border-color: rgba(254, 196, 0, 0.3);
+  box-shadow: 0 10px 30px -10px rgba(254, 196, 0, 0.15);
+  transform: translateY(-4px);
+}

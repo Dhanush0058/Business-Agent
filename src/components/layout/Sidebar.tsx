@@ -129,14 +129,14 @@ export const Sidebar: React.FC = () => {
         </div>
 
         <a
-          href={settings.portfolioUrl || 'https://dhanexstudio.com'}
+          href={settings.portfolioUrl || 'https://business-portfolio-bice.vercel.app/'}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-between p-2.5 rounded-lg bg-slate-900/80 border border-slate-800 text-xs text-slate-300 hover:border-slate-700 transition-colors"
         >
           <div className="truncate">
             <p className="font-semibold text-white truncate">{settings.agencyName}</p>
-            <p className="text-[10px] text-slate-500 truncate">{settings.portfolioUrl || 'dhanexstudio.com'}</p>
+            <p className="text-[10px] text-slate-500 truncate">{settings.portfolioUrl || 'business-portfolio-bice.vercel.app'}</p>
           </div>
           <ExternalLink className="w-3.5 h-3.5 text-slate-500 shrink-0" />
         </a>

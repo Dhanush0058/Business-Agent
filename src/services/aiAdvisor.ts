@@ -87,7 +87,7 @@ If you like the direction and would like to explore putting a dedicated website 
 
 Best regards,
 ${senderName}
-${agencyName} | ${settings.portfolioUrl || 'dhanexstudio.com'}
+${agencyName} | ${settings.portfolioUrl || 'https://business-portfolio-bice.vercel.app/'}
 ${settings.whatsappNumber ? `WhatsApp: ${settings.whatsappNumber}` : ''}`;
   } else if (tone === 'friendly') {
     subject = `Quick website concept for ${lead.businessName} 👋`;

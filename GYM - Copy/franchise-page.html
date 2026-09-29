@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CKO Kickboxing - Own a Franchise Opportunity</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body class="antialiased text-white bg-black">
+    <!-- Navigation -->
+    <nav class="sticky w-full top-0 z-50 bg-black/95 backdrop-blur-md border-b border-white/10 shadow-2xl nav-premium">
+      <div class="flex h-20 max-w-[1600px] mx-auto px-6 relative items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3 group z-50 shrink-0">
+          <img src="https://i.ibb.co/rRwkwHR2/cko-logo-2.png" alt="CKO Kickboxing Logo" class="w-auto h-10 object-contain">
+        </a>
+        <div class="hidden lg:flex items-center gap-12 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <a href="index.html" class="uppercase hover:text-accent transition-colors text-sm font-semibold text-white tracking-[0.1em] font-heading nav-link">Home</a>
+          <a href="about-page.html" class="uppercase hover:text-accent transition-colors text-sm font-semibold text-white tracking-[0.1em] font-heading nav-link">About</a>
+          <a href="kickboxing.html" class="uppercase hover:text-accent transition-colors text-sm font-semibold text-white tracking-[0.1em] font-heading nav-link">Kickboxing</a>
+          <a href="group-fitness.html" class="uppercase hover:text-accent transition-colors text-sm font-semibold text-white tracking-[0.1em] font-heading nav-link">Group Fitness</a>
+        </div>
+        <div class="hidden md:flex items-center shrink-0">
+          <a href="schedule.html" class="bg-accent hover:bg-[#e5b000] text-black font-heading font-semibold uppercase tracking-widest text-xs py-3 px-6 rounded-sm transition-all shadow-md shadow-accent/10 border-none">
+            Book Class
+          </a>
+        </div>
+        <button id="mobile-menu-btn" class="lg:hidden p-2 text-white hover:text-accent transition-colors" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="menu" id="menu-icon" class="w-6 h-6"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" id="close-icon" class="lucide lucide-x w-6 h-6 hidden"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+        </button>
+      </div>
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden lg:hidden bg-black text-white absolute w-full top-20 left-0 px-6 pb-8 border-b border-white/10 shadow-2xl">
+        <div class="flex flex-col space-y-6 pt-8 text-2xl font-heading font-semibold uppercase tracking-widest text-center">
+          <a href="index.html" class="block hover:text-accent transition-colors">Home</a>
+          <a href="about-page.html" class="block hover:text-accent transition-colors">About</a>
+          <a href="kickboxing.html" class="block hover:text-accent transition-colors">Kickboxing</a>
+          <a href="group-fitness.html" class="block hover:text-accent transition-colors">Group Fitness</a>
+          <a href="franchise-page.html" class="block text-accent transition-colors">Franchise</a>
+          <a href="schedule.html" class="mt-4 w-full bg-accent text-black font-semibold py-4 uppercase tracking-widest block text-sm"> Book Class </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Franchise Header -->
+    <section class="relative py-24 md:py-36 bg-black overflow-hidden border-b border-white/5">
+      <div class="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_center,rgba(254,196,0,0.08),transparent_70%)]"></div>
+      <div class="max-w-[1400px] mx-auto px-6 relative z-10 text-center">
+        <span class="text-accent text-xs font-semibold uppercase tracking-[0.3em] mb-4 block">Own a CKO Studio</span>
+        <h1 class="font-heading text-5xl md:text-7xl font-bold uppercase tracking-tight text-white mb-6">
+          Franchise <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#fec400] to-yellow-200">Opportunities</span>
+        </h1>
+        <p class="text-gray-400 text-base md:text-xl font-light leading-relaxed max-w-2xl mx-auto">
+          Build a highly profitable fitness business while changing lives in your local community. CKO offers a simple, powerful franchise model with massive support.
+        </p>
+      </div>
+    </section>
+
+    <!-- Investment / Value Prop Section -->
+    <section class="py-24 bg-[#050505]">
+      <div class="max-w-[1400px] mx-auto px-6">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <div class="reveal-on-scroll">
+            <h2 class="font-heading text-4xl font-bold uppercase text-white mb-6 tracking-tight">
+              Why Invest In <span class="text-accent">CKO Kickboxing?</span>
+            </h2>
+            <p class="text-gray-300 text-lg font-light leading-relaxed mb-6">
+              CKO Kickboxing has established a highly successful recurring subscription membership model. Our streamlined operation means low initial inventory, minimal equipment upkeep, and optimized staffing requirements.
+            </p>
+            <div class="space-y-6">
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-full bg-accent/10 border border-accent/20 text-accent flex items-center justify-center shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-percent"><line x1="19" x2="5" y1="5" y2="19"></line><circle cx="6.5" cy="6.5" r="2.5"></circle><circle cx="17.5" cy="17.5" r="2.5"></circle></svg>
+                </div>
+                <div>
+                  <h4 class="font-heading text-lg font-semibold uppercase text-white tracking-wide">Recurring Subscription Revenue</h4>
+                  <p class="text-xs text-gray-500 font-light mt-1">Predictable cash flow built on repeating month-to-month memberships, class packages, and branded merchandise sales.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-full bg-accent/10 border border-accent/20 text-accent flex items-center justify-center shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                </div>
+                <div>
+                  <h4 class="font-heading text-lg font-semibold uppercase text-white tracking-wide">Low Overhead Model</h4>
+                  <p class="text-xs text-gray-500 font-light mt-1">No complex high-maintenance machines. Heavy bags, fitness flooring, and high-energy music systems form the core layout.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Inquiry Form Card -->
+          <div class="relative reveal-on-scroll delay-100" id="form-container-card">
+            <div class="absolute -inset-3 bg-accent/10 blur-xl opacity-20 rounded-lg"></div>
+            <div class="relative border border-white/10 bg-[#0d0d0d] p-8 md:p-10 rounded-sm shadow-2xl">
+              <h3 class="font-heading text-2xl font-bold uppercase text-white mb-2">Request Information</h3>
+              <p class="text-xs text-gray-400 font-light mb-6">Fill out the quick questionnaire below to review initial financial metrics and receive our Franchise Disclosure Document (FDD).</p>
+
+              <form id="franchise-form">
+                <div class="space-y-4">
+                  <div>
+                    <label for="franchise-name" class="block text-[10px] uppercase font-bold text-gray-500 tracking-wider mb-2">Full Name</label>
+                    <input type="text" id="franchise-name" required placeholder="Enter full name" class="w-full h-11 bg-black border border-white/10 focus:border-accent text-sm text-white rounded-sm px-4 focus:outline-none">
+                  </div>
+                  <div class="grid grid-cols-2 gap-4">
+                    <div>
+                      <label for="franchise-email" class="block text-[10px] uppercase font-bold text-gray-500 tracking-wider mb-2">Email Address</label>
+                      <input type="email" id="franchise-email" required placeholder="name@domain.com" class="w-full h-11 bg-black border border-white/10 focus:border-accent text-sm text-white rounded-sm px-4 focus:outline-none">
+                    </div>
+                    <div>
+                      <label for="franchise-phone" class="block text-[10px] uppercase font-bold text-gray-500 tracking-wider mb-2">Phone Number</label>
+                      <input type="tel" id="franchise-phone" required placeholder="(555) 000-0000" class="w-full h-11 bg-black border border-white/10 focus:border-accent text-sm text-white rounded-sm px-4 focus:outline-none">
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-2 gap-4">
+                    <div>
+                      <label for="franchise-city" class="block text-[10px] uppercase font-bold text-gray-500 tracking-wider mb-2">Target Market (City/State)</label>
+                      <input type="text" id="franchise-city" required placeholder="Chicago, IL" class="w-full h-11 bg-black border border-white/10 focus:border-accent text-sm text-white rounded-sm px-4 focus:outline-none">
+                    </div>
+                    <div>
+                      <label for="franchise-capital" class="block text-[10px] uppercase font-bold text-gray-500 tracking-wider mb-2">Liquid Capital Available</label>
+                      <select id="franchise-capital" class="w-full h-11 bg-black border border-white/10 focus:border-accent text-sm text-white rounded-sm px-3 focus:outline-none">
+                        <option value="$50,000 - $100,000">$50,000 - $100,000</option>
+                        <option value="$100,000 - $250,000">$100,000 - $250,000</option>
+                        <option value="$250,000+">$250,000+</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="w-full h-12 bg-accent hover:bg-accent-hover text-black font-heading font-semibold uppercase tracking-widest text-xs rounded-sm transition-all mt-6 shadow-md shadow-accent/10">
+                  Submit Request
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/10">
+      <div class="max-w-[1400px] mx-auto px-6 py-14">
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+          <div>
+            <div class="leading-none text-3xl font-bold italic text-white tracking-tighter font-heading">CKO</div>
+            <div class="text-xs text-accent uppercase leading-none font-semibold tracking-[0.3em] mt-2">Kickboxing</div>
+            <p class="text-gray-500 text-base font-light leading-relaxed mt-6 max-w-sm"> High-energy kickboxing classes for every level. Hit the bags, sweat hard, and leave feeling unstoppable. </p>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-[0.25em] text-gray-400 font-semibold mb-4">Explore</div>
+            <ul class="space-y-3 text-base text-gray-400 font-light">
+              <li><a href="index.html" class="hover:text-accent transition-colors">Home</a></li>
+              <li><a href="schedule.html" class="hover:text-accent transition-colors">Book a Class</a></li>
+              <li><a href="about-page.html" class="hover:text-accent transition-colors">About Us</a></li>
+              <li><a href="franchise-page.html" class="hover:text-accent transition-colors">Own a Franchise</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-[0.25em] text-gray-400 font-semibold mb-4">Contact</div>
+            <ul class="space-y-3 text-base text-gray-400 font-light">
+              <li class="flex items-center gap-3">
+                <span class="text-accent"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="phone" class="lucide lucide-phone w-4 h-4"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path></svg></span>
+                <a href="tel:5551234567" class="hover:text-accent transition-colors">(555) 123-4567</a>
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="text-accent"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="mail" class="lucide lucide-mail w-4 h-4"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg></span>
+                <a href="mailto:hello@ckokickboxing.com" class="hover:text-accent transition-colors">hello@ckokickboxing.com</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-[0.25em] text-gray-400 font-semibold mb-4">Follow</div>
+            <div class="flex items-center gap-3">
+              <a href="#" class="w-10 h-10 rounded-full border border-white/10 bg-white/5 hover:border-accent/50 hover:bg-white/10 transition-all flex items-center justify-center" aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="instagram" class="lucide lucide-instagram w-5 h-5 text-gray-200"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+              </a>
+              <a href="#" class="w-10 h-10 rounded-full border border-white/10 bg-white/5 hover:border-accent/50 hover:bg-white/10 transition-all flex items-center justify-center" aria-label="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="facebook" class="lucide lucide-facebook w-5 h-5 text-gray-200"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p class="text-xs text-gray-500 font-light">© 2026 CKO Kickboxing. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+    <script src="booking.js"></script>
+  </body>
+</html>

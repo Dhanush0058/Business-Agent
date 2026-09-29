@@ -96,7 +96,7 @@ Business Info:
 - Current Website Status: ${lead.websiteStatus}
 - Concept Demo URL: ${demoUrl}
 - Requested Tone: ${tone}
-- Sender: Dhanush from Dhanex Studio (${settings.portfolioUrl || 'dhanexstudio.com'})
+- Sender: Dhanush from Dhanex Studio (${settings.portfolioUrl || 'https://business-portfolio-bice.vercel.app/'})
 
 Strict Compliance Guidelines:
 1. Clearly disclose that the link is an independent "Website Concept" created by Dhanex Studio.

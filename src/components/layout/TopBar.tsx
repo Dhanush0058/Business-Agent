@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
-import { Plus, Search, ShieldCheck, Sparkles, User } from 'lucide-react';
+import { Plus, Search, ShieldCheck, Sparkles, User, Activity } from 'lucide-react';
 
 interface Props {
   onOpenAddModal: () => void;
@@ -10,6 +10,21 @@ interface Props {
 
 export const TopBar: React.FC<Props> = ({ onOpenAddModal, searchQuery, setSearchQuery }) => {
   const { activeTab, settings } = useApp();
+  const [serverOnline, setServerOnline] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const checkServer = async () => {
+      try {
+        const res = await fetch('http://localhost:5000/api/health', { signal: AbortSignal.timeout(3000) });
+        setServerOnline(res.ok);
+      } catch {
+        setServerOnline(false);
+      }
+    };
+    checkServer();
+    const interval = setInterval(checkServer, 15000);
+    return () => clearInterval(interval);
+  }, []);
 
   const getTabTitle = () => {
     switch (activeTab) {
@@ -49,6 +64,19 @@ export const TopBar: React.FC<Props> = ({ onOpenAddModal, searchQuery, setSearch
             <ShieldCheck className="w-3 h-3" />
             Human Approval Enabled
           </span>
+          {serverOnline !== null && (
+            <span
+              className={`hidden sm:inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full border ${
+                serverOnline
+                  ? 'text-emerald-300 bg-emerald-950/40 border-emerald-500/30'
+                  : 'text-amber-300 bg-amber-950/40 border-amber-500/30'
+              }`}
+              title={serverOnline ? 'Backend server running on http://localhost:5000' : 'Backend server offline - using direct client mode'}
+            >
+              <span className={`w-1.5 h-1.5 rounded-full ${serverOnline ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`}></span>
+              {serverOnline ? 'Server: Active (Port 5000)' : 'Client-Direct Mode'}
+            </span>
+          )}
         </h1>
         <p className="text-[11px] text-slate-400 hidden sm:block">{info.desc}</p>
       </div>

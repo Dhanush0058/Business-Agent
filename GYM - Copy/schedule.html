@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CKO Kickboxing - Book Free Class Schedule</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body class="antialiased text-white bg-black">
+    <!-- Navigation -->
+    <nav class="sticky w-full top-0 z-50 bg-black/95 backdrop-blur-md border-b border-white/10 shadow-2xl nav-premium">
+      <div class="flex h-20 max-w-[1600px] mx-auto px-6 relative items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3 group z-50 shrink-0">
+          <img src="https://i.ibb.co/rRwkwHR2/cko-logo-2.png" alt="CKO Kickboxing Logo" class="w-auto h-10 object-contain">
+        </a>
+        <div class="hidden lg:flex items-center gap-12 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <a href="index.html" class="uppercase hover:text-accent transition-colors text-sm font-semibold text-white tracking-[0.1em] font-heading nav-link">Home</a>
+          <a href="about-page.html" class="uppercase hover:text-accent transition-colors text-sm font-semibold text-white tracking-[0.1em] font-heading nav-link">About</a>
+          <a href="kickboxing.html" class="uppercase hover:text-accent transition-colors text-sm font-semibold text-white tracking-[0.1em] font-heading nav-link">Kickboxing</a>
+          <a href="group-fitness.html" class="uppercase hover:text-accent transition-colors text-sm font-semibold text-white tracking-[0.1em] font-heading nav-link">Group Fitness</a>
+        </div>
+        <div class="hidden md:flex items-center shrink-0">
+          <a href="schedule.html" class="bg-accent hover:bg-[#e5b000] text-black font-heading font-semibold uppercase tracking-widest text-xs py-3 px-6 rounded-sm transition-all shadow-md shadow-accent/10 border-none">
+            Book Class
+          </a>
+        </div>
+        <button id="mobile-menu-btn" class="lg:hidden p-2 text-white hover:text-accent transition-colors" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="menu" id="menu-icon" class="w-6 h-6"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" id="close-icon" class="lucide lucide-x w-6 h-6 hidden"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+        </button>
+      </div>
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden lg:hidden bg-black text-white absolute w-full top-20 left-0 px-6 pb-8 border-b border-white/10 shadow-2xl">
+        <div class="flex flex-col space-y-6 pt-8 text-2xl font-heading font-semibold uppercase tracking-widest text-center">
+          <a href="index.html" class="block hover:text-accent transition-colors">Home</a>
+          <a href="about-page.html" class="block hover:text-accent transition-colors">About</a>
+          <a href="kickboxing.html" class="block hover:text-accent transition-colors">Kickboxing</a>
+          <a href="group-fitness.html" class="block hover:text-accent transition-colors">Group Fitness</a>
+          <a href="franchise-page.html" class="block hover:text-accent transition-colors">Franchise</a>
+          <a href="schedule.html" class="mt-4 w-full bg-accent text-black font-semibold py-4 uppercase tracking-widest block text-sm"> Book Class </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="py-12 bg-black border-b border-white/5">
+      <div class="max-w-[1400px] mx-auto px-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+          <span class="text-accent text-xs font-semibold uppercase tracking-[0.3em] mb-2 block">Weekly Schedule</span>
+          <h1 class="font-heading text-4xl md:text-5xl font-bold uppercase tracking-tight text-white">Find Your Class</h1>
+        </div>
+        <!-- Simple Info Badge -->
+        <div class="flex items-center gap-3 bg-[#0d0d0d] border border-white/10 py-3 px-5 rounded-sm self-start">
+          <span class="w-2.5 h-2.5 rounded-full bg-accent animate-ping"></span>
+          <span class="text-xs font-semibold uppercase tracking-wider text-gray-300">Reserve Your bag today</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter Panel & Day Tabs Section -->
+    <section class="py-8 bg-[#050505] border-b border-white/5 sticky top-20 z-40 backdrop-blur-md">
+      <div class="max-w-[1400px] mx-auto px-6">
+        <!-- Filter Dropdowns -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+          <div>
+            <label for="filter-class-type" class="block text-[10px] uppercase font-bold text-gray-500 tracking-widest mb-2">Class Type</label>
+            <select id="filter-class-type" class="w-full h-11 bg-black border border-white/10 focus:border-accent text-sm text-white rounded-sm px-3 focus:outline-none">
+              <option value="all">All Class Types</option>
+            </select>
+          </div>
+          <div>
+            <label for="filter-instructor" class="block text-[10px] uppercase font-bold text-gray-500 tracking-widest mb-2">Instructor</label>
+            <select id="filter-instructor" class="w-full h-11 bg-black border border-white/10 focus:border-accent text-sm text-white rounded-sm px-3 focus:outline-none">
+              <option value="all">All Instructors</option>
+            </select>
+          </div>
+          <div>
+            <label for="filter-time" class="block text-[10px] uppercase font-bold text-gray-500 tracking-widest mb-2">Time of Day</label>
+            <select id="filter-time" class="w-full h-11 bg-black border border-white/10 focus:border-accent text-sm text-white rounded-sm px-3 focus:outline-none">
+              <option value="all">Any Time</option>
+              <option value="Morning">Morning (Before 12 PM)</option>
+              <option value="Midday">Midday (12 PM - 4 PM)</option>
+              <option value="Evening">Evening (After 4 PM)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 7-Day Horizontal Calendar Tab Bar -->
+        <div>
+          <label class="block text-[10px] uppercase font-bold text-gray-500 tracking-widest mb-3">Select Day</label>
+          <div id="day-tabs" class="grid grid-cols-4 sm:grid-cols-7 gap-2">
+            <!-- Day tabs populated dynamically by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Schedule Grid / Listings -->
+    <section class="py-12 bg-black min-h-[500px]">
+      <div class="max-w-[1400px] mx-auto px-6">
+        <div id="schedule-slots" class="space-y-4">
+          <!-- Class slots dynamically generated by booking.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking Modal -->
+    <div id="booking-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden" role="dialog" aria-modal="true">
+      <div class="relative w-full max-w-lg bg-[#0d0d0d] border border-white/10 rounded-sm overflow-hidden p-8 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+        <!-- Close Button -->
+        <button onclick="closeBookingModal()" class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors" aria-label="Close modal">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg>
+        </button>
+
+        <!-- Selected Class Highlights -->
+        <div class="mb-6 p-4 bg-black border border-white/5 rounded-sm" id="modal-class-details">
+          <!-- Populated dynamically by booking.js -->
+        </div>
+
+        <h2 class="font-heading text-2xl font-bold uppercase text-white mb-2">Book Your Free Bag</h2>
+        <p class="text-xs text-gray-400 font-light mb-6">Complete the registration form below to secure your bag station. First class is completely free.</p>
+
+        <!-- Booking Form -->
+        <form onsubmit="handleBookingSubmit(event)">
+          <div class="space-y-4">
+            <div>
+              <label for="fullname" class="block text-[10px] uppercase font-bold text-gray-500 tracking-wider mb-2">Full Name</label>
+              <input type="text" id="fullname" name="fullname" required placeholder="Enter full name" class="w-full h-11 bg-black border border-white/10 focus:border-accent text-sm text-white rounded-sm px-4 focus:outline-none">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label for="email" class="block text-[10px] uppercase font-bold text-gray-500 tracking-wider mb-2">Email Address</label>
+                <input type="email" id="email" name="email" required placeholder="name@domain.com" class="w-full h-11 bg-black border border-white/10 focus:border-accent text-sm text-white rounded-sm px-4 focus:outline-none">
+              </div>
+              <div>
+                <label for="phone" class="block text-[10px] uppercase font-bold text-gray-500 tracking-wider mb-2">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required placeholder="(555) 000-0000" class="w-full h-11 bg-black border border-white/10 focus:border-accent text-sm text-white rounded-sm px-4 focus:outline-none">
+              </div>
+            </div>
+            <div>
+              <label for="studio-select" class="block text-[10px] uppercase font-bold text-gray-500 tracking-wider mb-2">Preferred CKO Studio</label>
+              <select id="studio-select" name="studio-select" class="w-full h-11 bg-black border border-white/10 focus:border-accent text-sm text-white rounded-sm px-3 focus:outline-none">
+                <option value="CKO Downtown Studio">CKO Downtown Studio</option>
+                <option value="CKO Northside Studio">CKO Northside Studio</option>
+                <option value="CKO Westside Studio">CKO Westside Studio</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="w-full h-12 bg-accent hover:bg-accent-hover text-black font-heading font-semibold uppercase tracking-widest text-xs rounded-sm transition-all mt-6 shadow-md shadow-accent/10">
+            Confirm Free Booking
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/10">
+      <div class="max-w-[1400px] mx-auto px-6 py-14">
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+          <div>
+            <div class="leading-none text-3xl font-bold italic text-white tracking-tighter font-heading">CKO</div>
+            <div class="text-xs text-accent uppercase leading-none font-semibold tracking-[0.3em] mt-2">Kickboxing</div>
+            <p class="text-gray-500 text-base font-light leading-relaxed mt-6 max-w-sm"> High-energy kickboxing classes for every level. Hit the bags, sweat hard, and leave feeling unstoppable. </p>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-[0.25em] text-gray-400 font-semibold mb-4">Explore</div>
+            <ul class="space-y-3 text-base text-gray-400 font-light">
+              <li><a href="index.html" class="hover:text-accent transition-colors">Home</a></li>
+              <li><a href="schedule.html" class="hover:text-accent transition-colors">Book a Class</a></li>
+              <li><a href="about-page.html" class="hover:text-accent transition-colors">About Us</a></li>
+              <li><a href="franchise-page.html" class="hover:text-accent transition-colors">Own a Franchise</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-[0.25em] text-gray-400 font-semibold mb-4">Contact</div>
+            <ul class="space-y-3 text-base text-gray-400 font-light">
+              <li class="flex items-center gap-3">
+                <span class="text-accent"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="phone" class="lucide lucide-phone w-4 h-4"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path></svg></span>
+                <a href="tel:5551234567" class="hover:text-accent transition-colors">(555) 123-4567</a>
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="text-accent"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="mail" class="lucide lucide-mail w-4 h-4"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg></span>
+                <a href="mailto:hello@ckokickboxing.com" class="hover:text-accent transition-colors">hello@ckokickboxing.com</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-[0.25em] text-gray-400 font-semibold mb-4">Follow</div>
+            <div class="flex items-center gap-3">
+              <a href="#" class="w-10 h-10 rounded-full border border-white/10 bg-white/5 hover:border-accent/50 hover:bg-white/10 transition-all flex items-center justify-center" aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="instagram" class="lucide lucide-instagram w-5 h-5 text-gray-200"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+              </a>
+              <a href="#" class="w-10 h-10 rounded-full border border-white/10 bg-white/5 hover:border-accent/50 hover:bg-white/10 transition-all flex items-center justify-center" aria-label="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="facebook" class="lucide lucide-facebook w-5 h-5 text-gray-200"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p class="text-xs text-gray-500 font-light">© 2026 CKO Kickboxing. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+    <script src="booking.js"></script>
+  </body>
+</html>

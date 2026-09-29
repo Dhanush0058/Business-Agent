@@ -37,6 +37,7 @@ export const DemoGeneratorView: React.FC = () => {
 
   const [activeLeadId, setActiveLeadId] = useState<string>(selectedLeadId || (leads[0]?.id || ''));
   const [device, setDevice] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
+  const [previewMode, setPreviewMode] = useState<'dynamic' | 'vercel'>('dynamic');
   const [activeTab, setActiveSidebarTab] = useState<'preview' | 'customize' | 'approval'>('preview');
 
   const currentLead = leads.find((l) => l.id === activeLeadId);
@@ -226,39 +227,66 @@ export const DemoGeneratorView: React.FC = () => {
             className={`w-full ${getDeviceWidth()} transition-all duration-300 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-950`}
           >
             {/* Render Mode Switcher Bar */}
-            <div className="bg-slate-900 px-4 py-2 border-b border-slate-800 flex items-center justify-between">
+            <div className="bg-slate-900 px-4 py-2 border-b border-slate-800 flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80"></span>
                   <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
                 </div>
-                <div className="ml-3 px-3 py-0.5 rounded-md bg-slate-950 border border-slate-800 text-[11px] text-slate-400 font-mono truncate max-w-xs">
-                  {currentLead?.demoUrl || `https://gym-project1-pi.vercel.app/?business_name=${encodeURIComponent(currentLead?.businessName || '')}`}
+                <div className="ml-2 px-2.5 py-0.5 rounded-md bg-slate-950 border border-slate-800 text-[11px] text-slate-400 font-mono truncate max-w-xs">
+                  {previewMode === 'dynamic' ? `${editData?.businessName || currentLead?.businessName} • Live Dynamic Preview` : (currentLead?.demoUrl || 'https://gym-project1-pi.vercel.app')}
                 </div>
               </div>
 
               <div className="flex items-center gap-2">
+                <div className="flex items-center p-0.5 rounded-lg bg-slate-950 border border-slate-800">
+                  <button
+                    type="button"
+                    onClick={() => setPreviewMode('dynamic')}
+                    className={`px-2.5 py-1 rounded text-[11px] font-bold transition-all ${
+                      previewMode === 'dynamic' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    Dynamic Concept
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPreviewMode('vercel')}
+                    className={`px-2.5 py-1 rounded text-[11px] font-bold transition-all ${
+                      previewMode === 'vercel' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    External Vercel
+                  </button>
+                </div>
+
                 <a
                   href={currentLead?.demoUrl || `https://gym-project1-pi.vercel.app/?business_name=${encodeURIComponent(currentLead?.businessName || '')}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[10px] px-2 py-0.5 rounded bg-indigo-600 hover:bg-indigo-500 text-white font-bold flex items-center gap-1"
+                  className="text-[10px] px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold flex items-center gap-1 border border-slate-700 transition-colors"
                 >
-                  <span>Open Live</span>
+                  <span>Open URL</span>
                   <ExternalLink className="w-3 h-3" />
                 </a>
               </div>
             </div>
 
-            {/* Rendered Template (Live Vercel Site in Interactive Viewport) */}
-            <div className="h-[720px] overflow-hidden bg-slate-950 relative">
-              <iframe
-                src={currentLead?.demoUrl || (currentLead?.assignedTemplate === 'restaurant' ? 'https://restuarant-project2.vercel.app' : currentLead?.assignedTemplate === 'education' ? 'https://education-project3.vercel.app' : 'https://gym-project1-pi.vercel.app')}
-                title="Live Vercel Concept Demo"
-                className="w-full h-full border-0 bg-slate-950"
-                sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-              />
+            {/* Rendered Template Viewport */}
+            <div className="h-[720px] overflow-y-auto bg-slate-950 relative">
+              {previewMode === 'dynamic' && editData ? (
+                <div className="w-full">
+                  <LiveTemplateRenderer data={editData} />
+                </div>
+              ) : (
+                <iframe
+                  src={currentLead?.demoUrl || (currentLead?.assignedTemplate === 'restaurant' ? 'https://restuarant-project2.vercel.app' : currentLead?.assignedTemplate === 'education' ? 'https://education-project3.vercel.app' : 'https://gym-project1-pi.vercel.app')}
+                  title="Live Vercel Concept Demo"
+                  className="w-full h-full border-0 bg-slate-950"
+                  sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                />
+              )}
             </div>
           </div>
         </div>

@@ -1,0 +1,9 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# Agent configurations
+.agents/
+.gemini/
+*.log
+node_modules/

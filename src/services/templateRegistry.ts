@@ -295,7 +295,7 @@ export function generatePersonalizedDemoData(lead: Lead, templateId?: string): D
     ];
   }
 
-  const cleanPhone = lead.phone || '+91 98765 43210';
+  const cleanPhone = lead.phone || '+91 93472 49697';
   const whatsappNum = cleanPhone.replace(/[^0-9]/g, '');
 
   return {
@@ -311,7 +311,7 @@ export function generatePersonalizedDemoData(lead: Lead, templateId?: string): D
     secondaryColor: defaults.secondaryColor || '#4f46e5',
     accentColor: defaults.accentColor || '#10b981',
     ctaText: defaults.ctaText || 'Connect via WhatsApp',
-    ctaWhatsapp: whatsappNum || '919876543210',
+    ctaWhatsapp: whatsappNum || '919347249697',
     ctaPhone: cleanPhone,
     location: lead.location || 'Hyderabad, India',
     openingHours: lead.hours || defaults.openingHours || 'Mon - Sat: 9:00 AM - 9:00 PM',

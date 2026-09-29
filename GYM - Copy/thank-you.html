@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CKO Kickboxing - Booking Confirmed!</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body class="antialiased text-white bg-black">
+    <!-- Navigation -->
+    <nav class="sticky w-full top-0 z-50 bg-black/95 backdrop-blur-md border-b border-white/10 shadow-2xl nav-premium">
+      <div class="flex h-20 max-w-[1600px] mx-auto px-6 relative items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3 group z-50 shrink-0">
+          <img src="https://i.ibb.co/rRwkwHR2/cko-logo-2.png" alt="CKO Kickboxing Logo" class="w-auto h-10 object-contain">
+        </a>
+        <div class="hidden lg:flex items-center gap-12 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <a href="index.html" class="uppercase hover:text-accent transition-colors text-sm font-semibold text-white tracking-[0.1em] font-heading nav-link">Home</a>
+          <a href="about-page.html" class="uppercase hover:text-accent transition-colors text-sm font-semibold text-white tracking-[0.1em] font-heading nav-link">About</a>
+          <a href="kickboxing.html" class="uppercase hover:text-accent transition-colors text-sm font-semibold text-white tracking-[0.1em] font-heading nav-link">Kickboxing</a>
+          <a href="group-fitness.html" class="uppercase hover:text-accent transition-colors text-sm font-semibold text-white tracking-[0.1em] font-heading nav-link">Group Fitness</a>
+        </div>
+        <div class="hidden md:flex items-center shrink-0">
+          <a href="schedule.html" class="bg-accent hover:bg-[#e5b000] text-black font-heading font-semibold uppercase tracking-widest text-xs py-3 px-6 rounded-sm transition-all shadow-md shadow-accent/10 border-none">
+            Book Class
+          </a>
+        </div>
+        <button id="mobile-menu-btn" class="lg:hidden p-2 text-white hover:text-accent transition-colors" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="menu" id="menu-icon" class="w-6 h-6"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" id="close-icon" class="lucide lucide-x w-6 h-6 hidden"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+        </button>
+      </div>
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden lg:hidden bg-black text-white absolute w-full top-20 left-0 px-6 pb-8 border-b border-white/10 shadow-2xl">
+        <div class="flex flex-col space-y-6 pt-8 text-2xl font-heading font-semibold uppercase tracking-widest text-center">
+          <a href="index.html" class="block hover:text-accent transition-colors">Home</a>
+          <a href="about-page.html" class="block hover:text-accent transition-colors">About</a>
+          <a href="kickboxing.html" class="block hover:text-accent transition-colors">Kickboxing</a>
+          <a href="group-fitness.html" class="block hover:text-accent transition-colors">Group Fitness</a>
+          <a href="franchise-page.html" class="block hover:text-accent transition-colors">Franchise</a>
+          <a href="schedule.html" class="mt-4 w-full bg-accent text-black font-semibold py-4 uppercase tracking-widest block text-sm"> Book Class </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Thank You Hero -->
+    <section class="py-24 bg-black relative overflow-hidden">
+      <div class="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_center,rgba(254,196,0,0.06),transparent_75%)]"></div>
+      <div class="max-w-[700px] mx-auto px-6 relative z-10 text-center">
+        <!-- Success Check Icon -->
+        <div class="w-20 h-20 rounded-full bg-accent/10 border border-accent flex items-center justify-center text-accent mx-auto mb-8 animate-bounce">
+          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h1 class="font-heading text-4xl md:text-5xl font-bold uppercase tracking-tight text-white mb-3">You're Booked!</h1>
+        <p class="text-gray-400 text-sm md:text-base font-light mb-10">We've confirmed your heavy bag station. A copy of your reservation details has been sent to your email.</p>
+
+        <!-- Booking Details Card -->
+        <div class="border border-white/10 bg-[#0d0d0d] p-6 md:p-8 rounded-sm text-left mb-10 shadow-2xl">
+          <div class="flex items-center justify-between border-b border-white/5 pb-4 mb-6">
+            <span class="text-xs uppercase tracking-wider text-gray-500">Booking ID</span>
+            <span class="text-sm font-mono font-semibold text-accent" id="booking-id">CKO-834927</span>
+          </div>
+          
+          <div class="space-y-4">
+            <div>
+              <span class="block text-[10px] uppercase font-bold text-gray-500 tracking-wider mb-1">Class Type</span>
+              <strong class="text-white text-base" id="booking-class-name">CKO Signature Kickboxing</strong>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <span class="block text-[10px] uppercase font-bold text-gray-500 tracking-wider mb-1">Date</span>
+                <strong class="text-white text-sm" id="booking-date">Monday, Aug 24, 2026</strong>
+              </div>
+              <div>
+                <span class="block text-[10px] uppercase font-bold text-gray-500 tracking-wider mb-1">Time Slot</span>
+                <strong class="text-accent text-sm" id="booking-time">05:30 PM</strong>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <span class="block text-[10px] uppercase font-bold text-gray-500 tracking-wider mb-1">Instructor</span>
+                <strong class="text-white text-sm" id="booking-instructor">Jessica R.</strong>
+              </div>
+              <div>
+                <span class="block text-[10px] uppercase font-bold text-gray-500 tracking-wider mb-1">Location</span>
+                <strong class="text-white text-sm" id="booking-location">CKO Downtown Studio</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pre-Class Checklist -->
+        <div class="border border-white/5 bg-[#080808]/80 p-6 md:p-8 rounded-sm text-left mb-10">
+          <h3 class="font-heading text-lg font-semibold uppercase text-white mb-4 tracking-wider">Before You Arrive:</h3>
+          <ul class="space-y-3 text-xs text-gray-400 font-light">
+            <li class="flex items-center gap-3">
+              <span class="text-accent">•</span>
+              <span>Arrive <strong>10-15 minutes early</strong> so we can wrap your hands and set up your station.</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="text-accent">•</span>
+              <span>Wear comfortable athletic clothing and clean athletic training shoes.</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="text-accent">•</span>
+              <span>Bring a water bottle and sweat towel (rentals are also available).</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="text-accent">•</span>
+              <span><strong>Hand wraps</strong> are required. If you don't have them, they are available for purchase at the desk.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button onclick="window.print()" class="w-full sm:w-auto h-12 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-heading font-semibold uppercase tracking-wider text-xs px-8 rounded-sm transition-all flex items-center justify-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            Print Details
+          </button>
+          <a href="index.html" class="w-full sm:w-auto h-12 bg-accent hover:bg-accent-hover text-black font-heading font-semibold uppercase tracking-wider text-xs px-10 rounded-sm transition-all flex items-center justify-center">
+            Back to Homepage
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/10">
+      <div class="max-w-[1400px] mx-auto px-6 py-14">
+        <div class="border-t border-white/10 pt-8 flex items-center justify-between">
+          <p class="text-xs text-gray-500 font-light">© 2026 CKO Kickboxing. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+    <script>
+      // Load booking details on confirmation load
+      document.addEventListener("DOMContentLoaded", () => {
+        const defaultDetails = {
+          bookingId: "CKO-920138",
+          className: "CKO Signature Kickboxing",
+          classTime: "05:30 PM",
+          classDate: "Monday, August 24, 2026",
+          instructor: "Jessica R.",
+          studioLocation: "CKO Downtown Studio"
+        };
+
+        const stored = localStorage.getItem("latestBooking");
+        const details = stored ? JSON.parse(stored) : defaultDetails;
+
+        document.getElementById("booking-id").textContent = details.bookingId;
+        document.getElementById("booking-class-name").textContent = details.className;
+        document.getElementById("booking-date").textContent = details.classDate;
+        document.getElementById("booking-time").textContent = details.classTime;
+        document.getElementById("booking-instructor").textContent = details.instructor;
+        document.getElementById("booking-location").textContent = details.studioLocation;
+      });
+    </script>
+  </body>
+</html>

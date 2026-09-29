@@ -37,12 +37,14 @@ export const OutreachView: React.FC = () => {
 
   const currentLead = leads.find((l) => l.id === activeLeadId);
 
-  // Editable body
+  // Editable body & phone
   const [editedBody, setEditedBody] = useState<string>('');
   const [editedSubject, setEditedSubject] = useState<string>('');
+  const [targetPhone, setTargetPhone] = useState<string>(currentLead?.phone || '');
 
   useEffect(() => {
     if (currentLead) {
+      setTargetPhone(currentLead.phone || '');
       if (!currentLead.outreachMessage) {
         const msg = generateOutreachMessage(currentLead, settings, tone, currentLead.demoUrl);
         updateLead(currentLead.id, { outreachMessage: msg });
@@ -53,7 +55,7 @@ export const OutreachView: React.FC = () => {
         setEditedBody(currentLead.outreachMessage.body);
       }
     }
-  }, [currentLead?.id, currentLead?.outreachMessage]);
+  }, [currentLead?.id, currentLead?.outreachMessage, currentLead?.phone]);
 
   const handleToneChange = (newTone: 'professional' | 'friendly' | 'short') => {
     if (!currentLead) return;
@@ -90,15 +92,25 @@ export const OutreachView: React.FC = () => {
   };
 
   const handleOpenWhatsApp = () => {
-    if (!currentLead || !currentLead.phone) {
-      showToast('No valid phone number for this prospect', 'warning');
+    const rawNumber = (targetPhone || currentLead?.phone || '').trim();
+    if (!rawNumber) {
+      showToast('Please enter a WhatsApp phone number for this prospect', 'warning');
       return;
     }
-    const cleanPhone = currentLead.phone.replace(/[^0-9]/g, '');
+    const cleanPhone = rawNumber.replace(/[^0-9]/g, '');
+    if (cleanPhone.length < 10) {
+      showToast('Please enter a valid 10-digit phone number', 'warning');
+      return;
+    }
+    const fullPhone = cleanPhone.length === 10 ? `91${cleanPhone}` : cleanPhone;
     const encodedText = encodeURIComponent(editedBody);
-    const waUrl = `https://wa.me/${cleanPhone}?text=${encodedText}`;
+    const waUrl = `https://wa.me/${fullPhone}?text=${encodedText}`;
     window.open(waUrl, '_blank');
-    showToast('Opened WhatsApp Web conversation', 'info');
+
+    if (currentLead && currentLead.phone !== rawNumber) {
+      updateLead(currentLead.id, { phone: rawNumber });
+    }
+    showToast(`Opened WhatsApp chat with +${fullPhone}`, 'info');
   };
 
   const handleOpenMailto = () => {
@@ -259,17 +271,26 @@ export const OutreachView: React.FC = () => {
                     <span>Approve Outreach Pitch</span>
                   </button>
                 ) : (
-                  <div className="flex items-center gap-2">
-                    {currentLead.phone && (
-                      <button
-                        type="button"
-                        onClick={handleOpenWhatsApp}
-                        className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition-all"
-                      >
-                        <MessageSquare className="w-4 h-4" />
-                        <span>Send WhatsApp</span>
-                      </button>
-                    )}
+                  <div className="flex flex-wrap items-center gap-2">
+                    <div className="flex items-center gap-1.5 bg-slate-950 px-2.5 py-1 rounded-xl border border-slate-750">
+                      <Phone className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                      <input
+                        type="text"
+                        placeholder="Enter phone (e.g. 9848496829)"
+                        value={targetPhone}
+                        onChange={(e) => setTargetPhone(e.target.value)}
+                        className="bg-transparent text-xs text-white placeholder-slate-500 focus:outline-none w-36 font-mono"
+                      />
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={handleOpenWhatsApp}
+                      className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition-all"
+                    >
+                      <MessageSquare className="w-4 h-4" />
+                      <span>Send WhatsApp</span>
+                    </button>
 
                     {currentLead.email && (
                       <button
@@ -284,7 +305,7 @@ export const OutreachView: React.FC = () => {
 
                     <button
                       type="button"
-                      onClick={() => handleMarkContacted(currentLead.phone ? 'WhatsApp' : 'Email')}
+                      onClick={() => handleMarkContacted(targetPhone ? 'WhatsApp' : 'Email')}
                       className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-750 text-slate-200 font-bold text-xs border border-slate-700 transition-colors"
                     >
                       Mark as Contacted

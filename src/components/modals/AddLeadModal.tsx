@@ -127,7 +127,7 @@ export const AddLeadModal: React.FC<Props> = ({ isOpen, onClose }) => {
               <label className="font-semibold text-slate-300">Public Phone / WhatsApp</label>
               <input
                 type="text"
-                placeholder="+91 98765 43210"
+                placeholder="+91 93472 49697"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 className="w-full bg-slate-950 border border-slate-750 rounded-xl px-3.5 py-2 text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
